@@ -1,0 +1,465 @@
+#!/bin/bash
+
+# keeping things simple, this is one file which declares several functions
+# to do various things like installing packages, enabling services etc. configurations
+# involving more  than one file are cloned as git repositories. single file config 
+# files are placed in this directory, all at the root.
+
+function setup_pacman_packages() {
+    pacman_packages=(
+        'base-devel'
+        'libx11'
+        'libxft'
+        'libxinerama'
+        'harfbuzz'
+        'freetype2'
+        'qemu'
+        'virt-manager'
+        'virt-viewer'
+        'dnsmasq'
+        'vde2'
+        'bridge-utils'
+        'openbsd-netcat'
+        'ebtables'
+        'iptables'
+        'libguestfs'
+        'neovim'
+        'git'
+        'nodejs'
+        'gdk-pixbuf2'
+        'lxappearance'
+        'breeze-icons'
+        'bluez' 
+        'blueman'
+        'libcap'
+        'libcap-ng'
+        'lib32-libcap'
+        'libpng'
+        'poco'
+        'cppunit'
+        'nodejs'
+        'npm'
+        'chromium'
+        'python-polib'
+        'python-lxml'
+        'ansible'
+        'docker'
+        'docker-compose'
+        'dunst'
+        'flameshot'
+        'gdb'
+        'base-devel'
+        'git'
+        'ccache'
+        'ant'
+        'apr'
+        'beanshell'
+        'bluez-libs'
+        'clucene'
+        'coin-or-mp'
+        'cppunit'
+        'curl'
+        'dbus-glib'
+        'desktop-file-utils'
+        'doxygen'
+        'flex'
+        'gcc-libs'
+        'glm'
+        'gobject-introspection'
+        'gperf'
+        'gpgme'
+        'graphite'
+        'gst-plugins-base-libs'
+        'gtk3'
+        'harfbuzz-icu'
+        'hicolor-icon-theme'
+        'hunspell'
+        'hyphen'
+        'icu'
+        'java-environment'
+        'jdk-openjdk'
+        'junit'
+        'lcms2'
+        'libabw'
+        'libatomic_ops'
+        'libcdr'
+        'libcmis'
+        'libe-book'
+        'libepoxy'
+        'libepubgen'
+        'libetonyek'
+        'libexttextcat'
+        'libfreehand'
+        'libgl'
+        'libjpeg'
+        'liblangtag'
+        'libmspub'
+        'libmwaw'
+        'libmythes'
+        'libnumbertext'
+        'libodfgen'
+        'liborcus'
+        'libpagemaker'
+        'libqxp'
+        'libstaroffice'
+        'libtommath'
+        'libvisio'
+        'libwpd'
+        'libwpg'
+        'libwps'
+        'libxinerama'
+        'libxrandr'
+        'libxslt'
+        'libzmf'
+        'lpsolve'
+        'mariadb-libs'
+        'mdds'
+        'nasm'
+        'neon'
+        'nspr'
+        'nss'
+        'pango'
+        'plasma-framework5'
+        'poppler'
+        'postgresql-libs'
+        'python'
+        'qt5-base'
+        'redland'
+        'sane'
+        'serf'
+        'sh'
+        'shared-mime-info'
+        'ttf-liberation'
+        'unixodbc'
+        'unzip'
+        'xmlsec'
+        'zip'
+        'gtk4'
+        'qt6-base'
+        'zxing-cpp'
+        'abseil-cpp'
+        'meson'
+        'lld'
+        'thunderbird'
+        'vscode'
+        'lua'
+        'gvfs'
+        'cmake'
+        'extra-cmake-modules'
+        'ansible'
+        'fastfetch'
+        'man-db'
+        'man-pages'
+        'btop'
+        'pasystray'
+        'pavucontrol'
+        'pulseaudio'
+        'unzip'
+        'networkmanager'
+        'network-manager-applet'
+        'ripgrep'
+        'thunar'
+        'thunar-volman'
+        'thunar-shares-plugin'
+        'tumbler'
+        'go'
+        'xdotool'
+        'netcat'
+        'python-watchdog'
+        'libreoffice'
+        'loupe'
+        'mtpfs'
+        'mpv'
+        'okular'
+        'perf'
+        'ntfs-3g'
+        'obs-studio'
+        'glade'
+        'luarocks'
+        'qt5ct'
+        'ruff'
+        'i3lock'
+        'vulkan-radeon'
+        'vulkan-tools'
+        'libxxf86vm'
+        'glm'
+        'shaderc'
+        'gimp'
+        'inkscape'
+        'xf86-video-amdgpu'
+        'xf86-video-ati'
+        'xf86-input-libinput'
+        'yarn'
+        'wget'
+        'curl'
+        'fontconfig'
+        'clang'
+        'libnma'
+        'ueberzug'
+        'pyright'
+        'fzf'
+        'fd'
+        'figlet'
+        'seahorse'
+        'valgrind'
+        'ctags'
+        'sxiv'
+        'feh'
+        'jre21-openjdk'
+        'python-pip'
+        'cargo'
+        'zola'
+        'tlp'
+        'cbatticon'
+        'tigervnc'
+        'blender'
+        'vinagre'
+        'tmux'
+        'zsh'
+        'zsh-syntax-highlighting'
+        'zsh-completions'
+        'zsh-autosuggestions'
+        'yt-dlp'
+        'xorg-server'
+        'xorg-xinit'
+        'xorg-xrandr'
+        'xorg-setxkbmap'
+        'xorg-xset'
+        'xcompmgr'
+        'xwallpaper'
+        'xclip'
+        'xsel'
+        'xorg-xauth'
+        'xorg-xprop'
+        'unzip'
+    )
+    # install pacman packages
+    for package in "${pacman_packages[@]}"; do
+        sudo pacman -S --noconfirm "$package"
+    done
+}
+
+function setup_aur_packages() {
+    aur_packages=(
+        'brave-bin'
+        'par'
+        'opengl-man-pages'
+        'gtypist'
+        'arc-darkest-theme-git'
+    )
+    # install yay if not already installed
+    if ! which yay > /dev/null 2>&1; then
+        sudo pacman -Sy  --noconfirm 'base-devel' 'git' 'unzip'
+        mkdir -p "$HOME/.local/src" && cd "$HOME/.local/src"
+        git clone https://aur.archlinux.org/yay-bin.git
+        cd yay-bin && makepkg -si
+    fi
+    # install aur packages
+    for package in "${aur_packages[@]}"; do
+        yay -Sy --noconfirm "$package"
+    done
+}
+
+
+function setup_user_services() {
+    services=(
+        'bluetooth.service'
+        'blueman-mechanism.service'
+        'libvirtd.service'
+        'docker.service'
+    )
+    # enable and start services
+    for service in "${services[@]}"; do
+        sudo systemctl enable "$service"
+        sudo systemctl start "$service"
+    done
+}
+
+
+function setup_user_groups() {
+    groups=(
+        'libvirt'
+        'kvm'
+        'docker'
+    )
+    # append user to groups
+    for group in "${groups[@]}"; do
+        sudo usermod -aG '$group' $(whoami)
+    done
+}
+
+
+function setup_git_repositories() {
+    git_repositories=(
+        'https://github.com/printfdebugging/dotfiles.git'
+        'https://github.com/printfdebugging/dots.git'
+        'https://github.com/printfdebugging/ipc.git'
+        'https://github.com/printfdebugging/learn-opengl.git'
+        'https://github.com/printfdebugging/themes.git'
+        'https://github.com/printfdebugging/sfml-blueprints.git'
+        'https://github.com/printfdebugging/keybindings.git'
+        'https://github.com/printfdebugging/glfw.git'
+        'https://github.com/printfdebugging/Craft.git'
+        'https://github.com/printfdebugging/libuv.git'
+        'https://github.com/printfdebugging/layman.git'
+
+        'https://gitlab.com/printfdebugging/website'
+        'https://gitlab.com/printfdebugging/logs'
+
+        'https://gerrit.libreoffice.org/core'
+        'https://github.com/CollaboraOnline/online.git'
+    )
+    # clone git repositories in "$HOME/repos"
+    for repository in "${git_repositories[@]}"; do
+        mkdir -p "$HOME/repos" && cd "$HOME/repos"
+        git clone "$repository"
+    done
+}
+
+function setup_suckless() {
+    suckless_projects=(
+        'dwm'
+        'st'
+        'dmenu'
+    )
+    # clone and build suckless
+    for suckless in "${suckless_projects[@]}"; do
+        mkdir -p "$HOME/.local/src" && cd "$HOME/.local/src"
+        if ! [ -d "$suckless" ]; then
+            git clone "https://github.com/printfdebugging/$suckless.git"
+            cd "$suckless"
+            sudo make install
+        fi
+    done
+}
+
+function setup_chromium_extensions() {
+    chromium_extensions=(
+        'bhlhnicpbhignbdhedgjhgdocnmhomnp'
+        'cfhdojbkjhnklbpkdaibdccddilifddb'
+        'dbepggeogbaibhgnhhndojpepiihcmeb'
+        'dpjamkmjmigaoobjbekmfgabipmfilij'
+        'eimadpbcbfnmbkopoojfekhnkhdbieeh'
+        'kchgllkpfcggmdaoopkhlkbcokngahlg'
+    )
+    # create the extension files
+    for extension in "${chromium_extensions[@]}"; do
+        if ! [ -f "/usr/share/chromium/extensions/$extension.json" ]; then
+            sudo mkdir -p "/usr/share/chromium/extensions/"
+            sudo echo '{ "external_update_url": "https://clients2.google.com/service/update2/crx" }' > "/usr/share/chromium/extensions/$extension.json"
+        fi
+    done
+}
+
+function setup_neovim_config() {
+    mkdir -p "$HOME/.config/nvim/" 
+    cp ./init.lua "$HOME/.config/nvim/"
+}
+
+function setup_tmux_config() {
+    mkdir -p "$HOME/.config/tmux/"
+    cp ./tmux.conf "$HOME/.config/tmux/"
+}
+
+function setup_gdb_config() {
+    mkdir -p "$HOME/.config/gdb/"
+    cp ./gdbinit "$HOME/.config/gdb/"
+}
+
+function setup_gtk_config() {
+    mkdir -p "$HOME/.config/gtk-3.0/"
+    cp ./settings.ini "$HOME/.config/gtk-3.0/"
+}
+
+function setup_flameshot_config() {
+    mkdir -p "$HOME/.config/flameshot/"
+    cp ./flameshot.ini "$HOME/.config/flameshot/"
+}
+
+function setup_dunst_config() {
+    mkdir -p "$HOME/.config/dunst/"
+    cp ./dunstrc "$HOME/.config/dunst/"
+}
+
+function setup_ccache_config() {
+    mkdir -p "$HOME/.config/ccache/"
+    cp ./ccache.conf "$HOME/.config/ccache/"
+}
+
+function setup_glade_config() {
+    mkdir -p "$HOME/.config/"
+    cp ./glade.conf "$HOME/.config/"
+}
+
+function setup_zsh_config() {
+    cp ./.zshrc ./.zprofile "$HOME"
+    chsh -s /usr/bin/zsh
+    sudo chsh -s /usr/bin/zsh
+}
+
+function setup_vscode_config() {
+    mkdir -p "$HOME/.config/Code - OSS/User/"
+    cp ./extensions.json ./keybindings.json ./settings.ini "$HOME/.config/Code - OSS/User/"
+}
+
+function setup_xorg_config() {
+    cp "./.xinitrc" "$HOME/.xinitrc"
+
+    mkdir -p "/etc/X11/xorg.conf.d"
+    sudo cp "./00-keyboard.conf" "/etc/X11/xorg.conf.d"
+    sudo cp "./30-touchpad.conf" "/etc/X11/xorg.conf.d"
+    sudo cp ./user-dirs.dirs     "$HOME/.config/user-dirs.dirs"
+}
+
+function setup_bash_scripts() {
+    mkdir -p "$HOME/.local"
+    git clone https://github.com/printfdebugging/bin.git "$HOME/.local/bin"
+}
+
+function setup_mpv_config() {
+    mkdir -p "$HOME/.config/mpv/"
+    cp ./input.conf ./mpv.conf "$HOME/.config/mpv/"
+}
+
+function setup_wallpaper() {
+    mkdir -p "$HOME/.local/share/wallpapers/"
+    cp ./greens.jpg "$HOME/.local/share/wallpapers/"
+}
+
+function setup_qemu_config() {
+    sudo virsh net-start default
+    sudo virsh net-autostart default
+    # uncomment lines in libvirtd.conf
+    lines=(
+        'unix_sock_group = "libvirt"'
+        'unix_sock_rw_perms = "0770"'
+    )
+    for line in "${lines[@]}"; do
+        sudo sed -i "/$line/s/^#//" /etc/libvirt/libvirtd.conf
+    done
+}
+
+function setup_emoji_font() {
+    sudo cp ./twemoji.ttf /usr/share/fonts/
+    sudo cp ./75-twemoji.conf /etc/fonts/conf.d/75-twemoji.conf
+}
+
+function setup_credentials() {
+    mkdir -p "$HOME/.ssh"
+    cp ./.gitconfig ./.gpgkey.asc "$HOME/"
+    cp ./id_ed25519 ./id_ed25519.pub ./cool ./cool.pub ./config  "$HOME/.ssh"
+
+    ansible-vault decrypt \
+        "$HOME/.gitconfig" \
+        "$HOME/.gpgkey.asc" \
+        "$HOME/.ssh/id_ed25519" \
+        "$HOME/.ssh/id_ed25519.pub" \
+        "$HOME/.ssh/cool" \
+        "$HOME/.ssh/cool.pub"
+}
+
+function setup_libreoffice_autogen() {
+    if [ -d "$HOME/repos/core" ]; then
+        cp ./autogen.input "$HOME/repos/core/autogen.input"
+    fi
+}
