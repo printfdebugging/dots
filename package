@@ -409,7 +409,7 @@ function setup_mpv_config() {
 
 function setup_wallpaper() {
     mkdir -p "$HOME/.local/share/wallpapers/"
-    cp ./greens.jpg ./second.jpg "$HOME/.local/share/wallpapers/"
+    cp ./map.jpg "$HOME/.local/share/wallpapers/"
 }
 
 function setup_qemu_config() {
