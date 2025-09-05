@@ -121,7 +121,7 @@ alias  n="cd ~/repos/notes/ && nvim"
 # git aliases
 alias stat="git status"
 alias  gca="git commit --amend"
-alias   tr="git log --all --oneline --graph --decorate"
+# alias   tr="git log --all --oneline --graph --decorate"
 alias   br="git branch"
 alias   gc="git clone"
 
