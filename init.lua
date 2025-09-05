@@ -3,7 +3,7 @@ vim.deprecate = function() end
 --------------- options ---------------------
 local options = {
   relativenumber = false,
-  number = true,
+  number = false,
   ruler = false,
   cmdheight = 1,
   background = "dark",
@@ -16,7 +16,7 @@ local options = {
   wrap = false,
   ignorecase = true,
   smartcase = true,
-  cursorline = true,
+  cursorline = false,
   termguicolors = true,
   signcolumn = "yes",
   backspace = "indent,eol,start",
@@ -32,10 +32,9 @@ local options = {
   scroll = 4,
   showtabline = 2,
   concealcursor = "ncv",
-  -- mouse = "",
   formatprg = "par w70",
   splitkeep = "screen",
-  equalalways = false,
+  equalalways = true,
 }
 
 local globals = {
@@ -77,6 +76,8 @@ package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/shar
 package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
 
 require("lazy").setup({
+
+
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.5",
@@ -122,6 +123,7 @@ require("lazy").setup({
       })
     end,
   },
+
 
   {
     "hedyhli/outline.nvim",
@@ -258,6 +260,7 @@ require("lazy").setup({
     end,
   },
 
+
   {
     "akinsho/toggleterm.nvim",
     version = "*",
@@ -282,6 +285,7 @@ require("lazy").setup({
     end
   },
 
+
   {
     "folke/trouble.nvim",
     opts = {}, -- for default options, refer to the configuration section for custom setup.
@@ -294,6 +298,7 @@ require("lazy").setup({
       },
     },
   },
+
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -403,7 +408,7 @@ require("lazy").setup({
             sapphire = "#74c7ec",
             blue = "#51afef",
             lavender = "#b4befe",
-            text = "#bbc2cf",
+            text = "#d8dee9",
             subtext1 = "#bac2de",
             subtext0 = "#a6adc8",
             overlay2 = "#9399b2",
@@ -472,8 +477,8 @@ require("lazy").setup({
 
       vim.cmd([[
       highlight TabLineSel    guifg=#00222b guibg=#59c2ff
-      highlight TabLineFill   guibg=#1F2735
-      highlight TabLine       guibg=#1F2735
+      highlight TabLineFill   guibg=#00000000
+      highlight TabLine       guibg=#00000000
       highlight LineNr        guifg=#3f444a
       highlight LineNrAbove   guifg=#3f444a
       highlight LineNrBelow   guifg=#3f444a
@@ -485,7 +490,7 @@ require("lazy").setup({
       highlight GitSignsChangedeleteCul guibg=#21242b guifg=#f38ba8
       highlight GitSignsTopdeleteCul guibg=#21242b guifg=#f38ba8
       highlight GitSignsUntrackedCul guibg=#21242b guifg=#98be65
-      highlight Visual               guibg=#3f444a guifg=none gui=bold
+      highlight Visual               guibg=#181818 guifg=none gui=bold
       highlight @function.builtin   guifg=#51afef
       highlight @markup.link    gui=NONE guifg=#51afef gui=underline
       highlight @label    gui=NONE guifg=#cba6f7 gui=underline
@@ -563,10 +568,10 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*",
         callback = function(args)
-          current_file_path = vim.fn.expand("%:p")
+          current_file_path = vim.fn.expand("%:p");
           excluded_strings = {
             "online",
-            "core",
+            "libreoffice",
           }
           for _, str in ipairs(excluded_strings) do
             if string.match(current_file_path, str) then
@@ -676,7 +681,6 @@ require("lazy").setup({
     config = function()
       require("lualine").setup({
         options = {
-          theme = 'ayu_mirage',
           section_separators = { left = "|", right = "|" },
           component_separators = { left = "|", right = "|" },
         },
@@ -1054,7 +1058,7 @@ require("lazy").setup({
       })
     end
   },
-})
+});
 
 ------------------ keymaps -------------------
 
