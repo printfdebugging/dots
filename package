@@ -445,7 +445,8 @@ function setup_credentials() {
         "$HOME/.ssh/id_ed25519" \
         "$HOME/.ssh/id_ed25519.pub" \
         "$HOME/.ssh/cool" \
-        "$HOME/.ssh/cool.pub"
+        "$HOME/.ssh/cool.pub" \
+        "$HOME/.ssh/config"
 }
 
 function setup_libreoffice_autogen() {
@@ -457,9 +458,10 @@ function setup_libreoffice_autogen() {
 function setup_all_packages() {
     setup_pacman_packages && \
         setup_aur_packages && \
+        setup_credentials && \
+        setup_git_repositories && \
         setup_user_services && \
         setup_user_groups && \
-        setup_git_repositories && \
         setup_suckless && \
         setup_chromium_extensions && \
         setup_neovim_config && \
@@ -478,7 +480,6 @@ function setup_all_packages() {
         setup_wallpaper && \
         setup_qemu_config && \
         setup_emoji_font && \
-        setup_credentials && \
         setup_libreoffice_autogen
 }
 
