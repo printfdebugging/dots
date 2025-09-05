@@ -114,7 +114,6 @@ alias  c="cd"
 alias  l="cd /home/$USER/repos/core/"
 alias  o="cd /home/$USER/repos/online"
 alias cr="cd ~/repos/"
-alias  d="cd ~/repos/dotfiles/"
 alias  b="cd ~/.local/bin/"
 alias  n="cd ~/repos/notes/ && nvim"
 
