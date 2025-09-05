@@ -281,16 +281,11 @@ function setup_user_groups() {
 
 function setup_git_repositories() {
     git_repositories=(
-        'https://github.com/printfdebugging/dotfiles.git'
         'https://github.com/printfdebugging/dots.git'
         'https://github.com/printfdebugging/ipc.git'
         'https://github.com/printfdebugging/learn-opengl.git'
         'https://github.com/printfdebugging/themes.git'
-        'https://github.com/printfdebugging/sfml-blueprints.git'
-        'https://github.com/printfdebugging/keybindings.git'
-        'https://github.com/printfdebugging/glfw.git'
         'https://github.com/printfdebugging/Craft.git'
-        'https://github.com/printfdebugging/libuv.git'
         'https://github.com/printfdebugging/layman.git'
 
         'https://gitlab.com/printfdebugging/website'
