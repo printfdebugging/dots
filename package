@@ -32,6 +32,7 @@ function setup_pacman_packages() {
         'ctags'
         'curl'
         'dbus-glib'
+        'shellcheck'
         'desktop-file-utils'
         'dnsmasq'
         'docker'
