@@ -241,7 +241,7 @@ function setup_aur_packages() {
     # install yay if not already installed
     if ! which yay > /dev/null 2>&1; then
         sudo pacman -Sy  --noconfirm 'base-devel' 'git' 'unzip'
-        mkdir -p "$HOME/.local/src" && cd "$HOME/.local/src"
+        mkdir -p "$HOME/.local/src" && cd "$HOME/.local/src" || exit 1;
         git clone https://aur.archlinux.org/yay-bin.git
         cd yay-bin && makepkg -si
     fi
@@ -275,7 +275,7 @@ function setup_user_groups() {
     )
     # append user to groups
     for group in "${groups[@]}"; do
-        sudo usermod -aG '$group' $(whoami)
+        sudo usermod -aG "$group" "$(whoami)"
     done
 }
 
@@ -285,18 +285,18 @@ function setup_git_repositories() {
         'https://github.com/printfdebugging/dots.git'
         'https://github.com/printfdebugging/ipc.git'
         'https://github.com/printfdebugging/learn-opengl.git'
-        'https://github.com/printfdebugging/themes.git'
         'https://github.com/printfdebugging/layman.git'
 
         'https://gitlab.com/printfdebugging/website'
         'https://gitlab.com/printfdebugging/logs'
 
+        'https://github.com/printfdebugging/themes.git'
         'https://gerrit.libreoffice.org/core'
         'https://github.com/CollaboraOnline/online.git'
     )
     # clone git repositories in "$HOME/repos"
     for repository in "${git_repositories[@]}"; do
-        mkdir -p "$HOME/repos" && cd "$HOME/repos"
+        mkdir -p "$HOME/repos" && cd "$HOME/repos" || exit 1;
         git clone "$repository"
     done
 }
@@ -309,10 +309,10 @@ function setup_suckless() {
     )
     # clone and build suckless
     for suckless in "${suckless_projects[@]}"; do
-        mkdir -p "$HOME/.local/src" && cd "$HOME/.local/src"
+        mkdir -p "$HOME/.local/src" && cd "$HOME/.local/src" || exit 1;
         if ! [ -d "$suckless" ]; then
             git clone "https://github.com/printfdebugging/$suckless.git"
-            cd "$suckless"
+            cd "$suckless" || exit 1;
             sudo make install
         fi
     done
@@ -331,7 +331,7 @@ function setup_chromium_extensions() {
     for extension in "${chromium_extensions[@]}"; do
         if ! [ -f "/usr/share/chromium/extensions/$extension.json" ]; then
             sudo mkdir -p "/usr/share/chromium/extensions/"
-            sudo echo '{ "external_update_url": "https://clients2.google.com/service/update2/crx" }' > "/usr/share/chromium/extensions/$extension.json"
+            echo '{ "external_update_url": "https://clients2.google.com/service/update2/crx" }' | sudo tee "/usr/share/chromium/extensions/$extension.json"
         fi
     done
 }
