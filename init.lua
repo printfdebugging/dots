@@ -141,7 +141,7 @@ require("lazy").setup({
           show_numbers = false,
           show_relative_numbers = false,
           wrap = false,
-          show_cursorline = true,
+          show_cursorline = false,
           hide_cursor = false,
           focus_on_open = true,
           winhl = '',
@@ -1032,7 +1032,7 @@ require("lazy").setup({
         on_attach = my_on_attach,
         sync_root_with_cwd = true,
         view = {
-          cursorline = true,
+          cursorline = false,
           width = 35,
           side = "left",
         },
