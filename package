@@ -384,7 +384,7 @@ function setup_zsh_config() {
 
 function setup_vscode_config() {
     mkdir -p "$HOME/.config/Code - OSS/User/"
-    cp ./extensions.json ./keybindings.json ./settings.ini "$HOME/.config/Code - OSS/User/"
+    cp ./extensions.json ./keybindings.json ./settings.json "$HOME/.config/Code - OSS/User/"
 }
 
 function setup_xorg_config() {
