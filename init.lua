@@ -77,7 +77,6 @@ package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/shar
 
 require("lazy").setup({
 
-
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.5",
@@ -124,13 +123,12 @@ require("lazy").setup({
     end,
   },
 
-
   {
     "hedyhli/outline.nvim",
     config = function()
       require("outline").setup({
         outline_window = {
-          position = 'left',
+          position = "left",
           split_command = nil,
           width = 25,
           relative_width = true,
@@ -144,8 +142,8 @@ require("lazy").setup({
           show_cursorline = false,
           hide_cursor = false,
           focus_on_open = true,
-          winhl = '',
-          no_provider_message = 'No supported provider...'
+          winhl = "",
+          no_provider_message = "No supported provider...",
         },
         outline_items = {
           show_symbol_details = true,
@@ -153,16 +151,16 @@ require("lazy").setup({
           highlight_hovered_item = true,
           auto_set_cursor = true,
           auto_update_events = {
-            follow = { 'CursorMoved' },
-            items = { 'InsertLeave', 'WinEnter', 'BufEnter', 'BufWinEnter', 'TabEnter', 'BufWritePost' },
+            follow = { "CursorMoved" },
+            items = { "InsertLeave", "WinEnter", "BufEnter", "BufWinEnter", "TabEnter", "BufWritePost" },
           },
         },
         guides = {
           enabled = true,
           markers = {
-            bottom = '└',
-            middle = '├',
-            vertical = '│',
+            bottom = "└",
+            middle = "├",
+            vertical = "│",
           },
         },
         symbol_folding = {
@@ -171,7 +169,7 @@ require("lazy").setup({
             hovered = true,
             only = true,
           },
-          markers = { '', '' },
+          markers = { "", "" },
         },
         preview_window = {
           auto_preview = false,
@@ -182,39 +180,39 @@ require("lazy").setup({
           height = 50,
           min_height = 10,
           relative_height = true,
-          border = 'single',
-          winhl = 'NormalFloat:',
+          border = "single",
+          winhl = "NormalFloat:",
           winblend = 0,
-          live = false
+          live = false,
         },
         keymaps = {
-          show_help = '?',
-          close = {'<Esc>', 'q'},
-          goto_location = '<Cr>',
-          peek_location = 'o',
-          goto_and_close = '<S-Cr>',
-          restore_location = '<C-g>',
-          hover_symbol = '<C-space>',
-          toggle_preview = 'K',
-          rename_symbol = 'r',
-          code_actions = 'a',
-          fold = 'h',
-          unfold = 'l',
-          fold_toggle = '<Tab>',
-          fold_toggle_all = '<S-Tab>',
-          fold_all = 'W',
-          unfold_all = 'E',
-          fold_reset = 'R',
-          down_and_jump = '<C-j>',
-          up_and_jump = '<C-k>',
+          show_help = "?",
+          close = { "<Esc>", "q" },
+          goto_location = "<Cr>",
+          peek_location = "o",
+          goto_and_close = "<S-Cr>",
+          restore_location = "<C-g>",
+          hover_symbol = "<C-space>",
+          toggle_preview = "K",
+          rename_symbol = "r",
+          code_actions = "a",
+          fold = "h",
+          unfold = "l",
+          fold_toggle = "<Tab>",
+          fold_toggle_all = "<S-Tab>",
+          fold_all = "W",
+          unfold_all = "E",
+          fold_reset = "R",
+          down_and_jump = "<C-j>",
+          up_and_jump = "<C-k>",
         },
         providers = {
-          priority = { 'lsp', 'coc', 'markdown', 'norg', 'man' },
+          priority = { "lsp", "coc", "markdown", "norg", "man" },
           lsp = {
             blacklist_clients = {},
           },
           markdown = {
-            filetypes = {'markdown'},
+            filetypes = { "markdown" },
           },
         },
         symbols = {
@@ -222,49 +220,48 @@ require("lazy").setup({
           icon_fetcher = nil,
           icon_source = nil,
           icons = {
-            File = { icon = '󰈔', hl = 'Identifier' },
-            Module = { icon = '󰆧', hl = 'Include' },
-            Namespace = { icon = '󰅪', hl = 'Include' },
-            Package = { icon = '󰏗', hl = 'Include' },
-            Class = { icon = '𝓒', hl = 'Type' },
-            Method = { icon = 'ƒ', hl = 'Function' },
-            Property = { icon = '', hl = 'Identifier' },
-            Field = { icon = '󰆨', hl = 'Identifier' },
-            Constructor = { icon = '', hl = 'Special' },
-            Enum = { icon = 'ℰ', hl = 'Type' },
-            Interface = { icon = '󰜰', hl = 'Type' },
-            Function = { icon = '', hl = 'Function' },
-            Variable = { icon = '', hl = 'Constant' },
-            Constant = { icon = '', hl = 'Constant' },
-            String = { icon = '𝓐', hl = 'String' },
-            Number = { icon = '#', hl = 'Number' },
-            Boolean = { icon = '⊨', hl = 'Boolean' },
-            Array = { icon = '󰅪', hl = 'Constant' },
-            Object = { icon = '⦿', hl = 'Type' },
-            Key = { icon = '🔐', hl = 'Type' },
-            Null = { icon = 'NULL', hl = 'Type' },
-            EnumMember = { icon = '', hl = 'Identifier' },
-            Struct = { icon = '𝓢', hl = 'Structure' },
-            Event = { icon = '🗲', hl = 'Type' },
-            Operator = { icon = '+', hl = 'Identifier' },
-            TypeParameter = { icon = '𝙏', hl = 'Identifier' },
-            Component = { icon = '󰅴', hl = 'Function' },
-            Fragment = { icon = '󰅴', hl = 'Constant' },
-            TypeAlias = { icon = ' ', hl = 'Type' },
-            Parameter = { icon = ' ', hl = 'Identifier' },
-            StaticMethod = { icon = ' ', hl = 'Function' },
-            Macro = { icon = ' ', hl = 'Function' },
+            File = { icon = "󰈔", hl = "Identifier" },
+            Module = { icon = "󰆧", hl = "Include" },
+            Namespace = { icon = "󰅪", hl = "Include" },
+            Package = { icon = "󰏗", hl = "Include" },
+            Class = { icon = "𝓒", hl = "Type" },
+            Method = { icon = "ƒ", hl = "Function" },
+            Property = { icon = "", hl = "Identifier" },
+            Field = { icon = "󰆨", hl = "Identifier" },
+            Constructor = { icon = "", hl = "Special" },
+            Enum = { icon = "ℰ", hl = "Type" },
+            Interface = { icon = "󰜰", hl = "Type" },
+            Function = { icon = "", hl = "Function" },
+            Variable = { icon = "", hl = "Constant" },
+            Constant = { icon = "", hl = "Constant" },
+            String = { icon = "𝓐", hl = "String" },
+            Number = { icon = "#", hl = "Number" },
+            Boolean = { icon = "⊨", hl = "Boolean" },
+            Array = { icon = "󰅪", hl = "Constant" },
+            Object = { icon = "⦿", hl = "Type" },
+            Key = { icon = "🔐", hl = "Type" },
+            Null = { icon = "NULL", hl = "Type" },
+            EnumMember = { icon = "", hl = "Identifier" },
+            Struct = { icon = "𝓢", hl = "Structure" },
+            Event = { icon = "🗲", hl = "Type" },
+            Operator = { icon = "+", hl = "Identifier" },
+            TypeParameter = { icon = "𝙏", hl = "Identifier" },
+            Component = { icon = "󰅴", hl = "Function" },
+            Fragment = { icon = "󰅴", hl = "Constant" },
+            TypeAlias = { icon = " ", hl = "Type" },
+            Parameter = { icon = " ", hl = "Identifier" },
+            StaticMethod = { icon = " ", hl = "Function" },
+            Macro = { icon = " ", hl = "Function" },
           },
         },
       })
     end,
   },
 
-
   {
     "akinsho/toggleterm.nvim",
     version = "*",
-    config = function ()
+    config = function()
       require("toggleterm").setup({
         direction = "horizontal",
         float_opts = {
@@ -282,9 +279,8 @@ require("lazy").setup({
         vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
       end
       vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-    end
+    end,
   },
-
 
   {
     "folke/trouble.nvim",
@@ -299,14 +295,13 @@ require("lazy").setup({
     },
   },
 
-
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
       local configs = require("nvim-treesitter.configs")
       configs.setup({
-        auto_install = true,       -- don't automatically install the parsers
+        auto_install = true, -- don't automatically install the parsers
         ensure_installed = {
           "c",
           "cpp",
@@ -333,14 +328,13 @@ require("lazy").setup({
         },
         indent = { enable = true },
       })
-    end
+    end,
   },
 
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {
-    },
+    opts = {},
   },
 
   {
@@ -560,6 +554,7 @@ require("lazy").setup({
           c = { "clang-format" },
           cpp = { "clang-format" },
           python = { "isort", "black" },
+          sh = { "shfmt" },
         },
         -- format_on_save = {
         -- 	lsp_format = "fallback",
@@ -569,7 +564,7 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*",
         callback = function(args)
-          current_file_path = vim.fn.expand("%:p");
+          current_file_path = vim.fn.expand("%:p")
           excluded_strings = {
             "online",
             "libreoffice",
@@ -729,7 +724,7 @@ require("lazy").setup({
 {}
 {{% end %}}
         ]],
-            { i(1), i(2)}
+            { i(1), i(2) }
           )
         ),
         -- the sequence starts from 1 - 2 - then last 0
@@ -762,6 +757,31 @@ require("lazy").setup({
       if vim.fn.executable("npx") then
         vim.g.mkdp_filetypes = { "markdown" }
       end
+    end,
+  },
+
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      require("mason").setup()
+      require("mason-tool-installer").setup({
+        ensure_installed = {
+          -- formatters and linters
+          "shellcheck",
+          "shfmt",
+          "stylua",
+          "black",
+        },
+
+        auto_update = true,
+        run_on_start = true,
+        start_delay = 3000,
+        debounce_hours = 50,
+      })
     end,
   },
 
@@ -866,9 +886,9 @@ require("lazy").setup({
               fallback()
             end
           end, {
-              "i",
-              "s",
-            }),
+            "i",
+            "s",
+          }),
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
@@ -878,9 +898,9 @@ require("lazy").setup({
               fallback()
             end
           end, {
-              "i",
-              "s",
-            }),
+            "i",
+            "s",
+          }),
         }),
 
         formatting = {
@@ -997,7 +1017,6 @@ require("lazy").setup({
     "christoomey/vim-tmux-navigator",
   },
 
-
   {
     "szw/vim-maximizer",
   },
@@ -1014,9 +1033,9 @@ require("lazy").setup({
     version = "*",
     lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function ()
-      local my_on_attach = function (bufnr)
-        local api = require "nvim-tree.api"
+    config = function()
+      local my_on_attach = function(bufnr)
+        local api = require("nvim-tree.api")
         local function opts(desc)
           return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
         end
@@ -1025,8 +1044,8 @@ require("lazy").setup({
         api.config.mappings.default_on_attach(bufnr)
 
         -- custom mappings
-        vim.keymap.set("n", "<C-i>", api.tree.change_root_to_node,          opts("CD"))
-        vim.keymap.set("n", "<C-o>", api.tree.change_root_to_parent,          opts("CD"))
+        vim.keymap.set("n", "<C-i>", api.tree.change_root_to_node, opts("CD"))
+        vim.keymap.set("n", "<C-o>", api.tree.change_root_to_parent, opts("CD"))
       end
 
       require("nvim-tree").setup({
@@ -1057,9 +1076,9 @@ require("lazy").setup({
           },
         },
       })
-    end
+    end,
   },
-});
+})
 
 ------------------ keymaps -------------------
 
@@ -1202,13 +1221,13 @@ local normal_mode_keymaps = {
   {
     "<C-a>",
     function()
-      local pwd = vim.fn.getcwd();
-      if vim.uv.fs_stat(pwd .. '/CMakeLists.txt') then
+      local pwd = vim.fn.getcwd()
+      if vim.uv.fs_stat(pwd .. "/CMakeLists.txt") then
         vim.cmd([[
           :cgetexpr systemlist('cmake -B build && make -C build')
           :copen
         ]])
-      elseif vim.uv.fs_stat(pwd .. '/Makefile') or vim.uv.fs_stat(pwd .. '/makefile') then
+      elseif vim.uv.fs_stat(pwd .. "/Makefile") or vim.uv.fs_stat(pwd .. "/makefile") then
         vim.cmd([[
           :cgetexpr systemlist('make')
           :copen
@@ -1221,13 +1240,13 @@ local normal_mode_keymaps = {
   {
     "<C-s>",
     function()
-      local pwd = vim.fn.getcwd();
-      if vim.uv.fs_stat(pwd .. '/CMakeLists.txt') then
+      local pwd = vim.fn.getcwd()
+      if vim.uv.fs_stat(pwd .. "/CMakeLists.txt") then
         vim.cmd([[
           :cgetexpr systemlist('make -C build run')
           :copen
         ]])
-      elseif vim.uv.fs_stat(pwd .. '/Makefile') or vim.uv.fs_stat(pwd .. '/makefile') then
+      elseif vim.uv.fs_stat(pwd .. "/Makefile") or vim.uv.fs_stat(pwd .. "/makefile") then
         vim.cmd([[
           :cgetexpr systemlist('make run')
           :copen
@@ -1236,18 +1255,17 @@ local normal_mode_keymaps = {
         print("ERROR: neither CMakeLists.txt nor Makefile found")
       end
     end,
-
   },
   {
     "<C-d>",
     function()
-      local pwd = vim.fn.getcwd();
-      if vim.uv.fs_stat(pwd .. '/CMakeLists.txt') then
+      local pwd = vim.fn.getcwd()
+      if vim.uv.fs_stat(pwd .. "/CMakeLists.txt") then
         vim.cmd([[
           :cgetexpr systemlist('rm -rf build')
           :copen
         ]])
-      elseif vim.uv.fs_stat(pwd .. '/Makefile') or vim.uv.fs_stat(pwd .. '/makefile') then
+      elseif vim.uv.fs_stat(pwd .. "/Makefile") or vim.uv.fs_stat(pwd .. "/makefile") then
         vim.cmd([[
           :cgetexpr systemlist('make clean')
           :copen
@@ -1354,4 +1372,3 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "help", "man" },
   command = "wincmd L",
 })
-
