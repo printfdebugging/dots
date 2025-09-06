@@ -502,6 +502,7 @@ require("lazy").setup({
       highlight FloatBorder guibg=#00000000
       highlight TelescopeSelection guibg=#00000000
       highlight TelescopeSelectionCaret guibg=#00000000
+      highlight QuickFixLine guibg=#181818 gui=BOLD
       ]])
 
       vim.cmd([[highlight! link CursorLineSign CursorLine]])
@@ -1199,30 +1200,61 @@ local normal_mode_leader_keymaps = {
 
 local normal_mode_keymaps = {
   {
-    "<F1>",
+    "<C-a>",
     function()
-      vim.cmd([[
-        :cgetexpr systemlist('cmake -B build && make -C build')
-        :copen
+      local pwd = vim.fn.getcwd();
+      if vim.uv.fs_stat(pwd .. '/CMakeLists.txt') then
+        vim.cmd([[
+          :cgetexpr systemlist('cmake -B build && make -C build')
+          :copen
         ]])
+      elseif vim.uv.fs_stat(pwd .. '/Makefile') or vim.uv.fs_stat(pwd .. '/makefile') then
+        vim.cmd([[
+          :cgetexpr systemlist('make')
+          :copen
+        ]])
+      else
+        print("ERROR: neither CMakeLists.txt nor Makefile found")
+      end
     end,
   },
   {
-    "<F2>",
+    "<C-s>",
     function()
-      vim.cmd([[
-        :cgetexpr systemlist('make -C build run')
-        :copen
+      local pwd = vim.fn.getcwd();
+      if vim.uv.fs_stat(pwd .. '/CMakeLists.txt') then
+        vim.cmd([[
+          :cgetexpr systemlist('make -C build run')
+          :copen
         ]])
+      elseif vim.uv.fs_stat(pwd .. '/Makefile') or vim.uv.fs_stat(pwd .. '/makefile') then
+        vim.cmd([[
+          :cgetexpr systemlist('make run')
+          :copen
+        ]])
+      else
+        print("ERROR: neither CMakeLists.txt nor Makefile found")
+      end
     end,
+
   },
   {
-    "<F3>",
+    "<C-d>",
     function()
-      vim.cmd([[
-        :cgetexpr systemlist('rm -rf build')
-        :copen
+      local pwd = vim.fn.getcwd();
+      if vim.uv.fs_stat(pwd .. '/CMakeLists.txt') then
+        vim.cmd([[
+          :cgetexpr systemlist('rm -rf build')
+          :copen
         ]])
+      elseif vim.uv.fs_stat(pwd .. '/Makefile') or vim.uv.fs_stat(pwd .. '/makefile') then
+        vim.cmd([[
+          :cgetexpr systemlist('make clean')
+          :copen
+        ]])
+      else
+        print("ERROR: neither CMakeLists.txt nor Makefile found")
+      end
     end,
   },
   { "t", timelog_entry },
@@ -1322,3 +1354,4 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "help", "man" },
   command = "wincmd L",
 })
+
