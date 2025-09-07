@@ -134,7 +134,8 @@ alias  kdm="sudo rm -rf /var/service/gdm"
 alias    e="export SAL_USE_VCLPLUGIN=kf5;  /home/printfdebugging/repos/core/instdir/program/soffice"
 alias    f="export SAL_USE_VCLPLUGIN=kf6;  /home/printfdebugging/repos/core/instdir/program/soffice"
 alias    g="export SAL_USE_VCLPLUGIN=gtk3; /home/printfdebugging/repos/core/instdir/program/soffice"
-alias download='yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -S "res:1080" "$@"'
+alias dv='yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -S "res:1080" "$@"'
+alias da='yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -S "res:1080" -x "$@"'
 
 
 # package manager aliases
