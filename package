@@ -9,6 +9,7 @@ function setup_pacman_packages() {
     pacman_packages=(
         'abseil-cpp'
         'ansible'
+        'nginx'
         'ant'
         'apr'
         'base-devel'
@@ -255,6 +256,7 @@ function setup_aur_packages() {
 function setup_user_services() {
     services=(
         'bluetooth.service'
+        'nginx.service'
         'blueman-mechanism.service'
         'libvirtd.service'
         'docker.service'
@@ -446,6 +448,58 @@ function setup_libreoffice_autogen() {
     if [ -d "$HOME/repos/core" ]; then
         cp ./autogen.input "$HOME/repos/core/autogen.input"
     fi
+}
+
+function setup_pacman_config() {
+    sudo cp ./mirrorlist /etc/pacman.d/mirrorlist
+    sudo cp ./pacman.conf /etc/pacman.conf
+}
+
+function setup_nginx_config() {
+    sudo cp ./nginx.conf /etc/nginx/nginx.conf
+}
+
+function setup_drives() {
+    declare -A external=(
+        [UUID]=541E03E81E03C1CA
+        [PATH]=/media/external/
+        [TYPE]=ntfs
+        [OPTIONS]='defaults 0 0'
+    )
+
+    declare -A external_neo=(
+        [UUID]=DE7A39057A38DBC9
+        [PATH]=/media/external-neo/
+        [TYPE]=ntfs
+        [OPTIONS]='defaults 0 0'
+    )
+
+    declare -A external_pro=(
+        [UUID]=EA2C321C2C31E46B
+        [PATH]=/media/external-pro/
+        [TYPE]=ntfs
+        [OPTIONS]='defaults 0 0'
+    )
+
+    drives=(
+        external
+        external_pro
+        external_neo
+    )
+
+    for drive_name in "${drives[@]}"; do
+        declare -n drive="$drive_name"
+        if [ "$(lsblk -f | grep -c "${drive[UUID]}")" -eq 0 ]; then
+            continue
+        fi
+        if [ "$(grep -e "${drive[UUID]}" /etc/fstab)" == "" ]; then
+            if ! [ -d "${drive[PATH]}" ]; then
+                mkdir -p "${drive[PATH]}"
+                sudo chown "$(whoami):$(whoami)" "${drive[PATH]}"
+            fi
+            echo "UUID=${drive[UUID]}    ${drive[PATH]}     ${drive[TYPE]}     ${drive[OPTIONS]}" | sudo tee -a /etc/fstab
+        fi
+    done
 }
 
 function setup_all_packages() {
