@@ -187,6 +187,7 @@ function setup_pacman_packages() {
         'tlp'
         'tmux'
         'ttf-liberation'
+        'ttf-jetbrains-mono-nerd'
         'tumbler'
         'ueberzug'
         'unixodbc'
@@ -398,7 +399,9 @@ function setup_xorg_config() {
 
 function setup_bash_scripts() {
     mkdir -p "$HOME/.local"
-    git clone https://github.com/printfdebugging/bin.git "$HOME/.local/bin"
+    if ! [ -d "$HOME/.local/bin" ]; then
+        git clone https://github.com/printfdebugging/bin.git "$HOME/.local/bin"
+    fi
 }
 
 function setup_mpv_config() {
@@ -568,12 +571,12 @@ function setup_all_packages() {
         setup_bash_scripts &&
         setup_mpv_config &&
         setup_wallpaper &&
-        setup_qemu_config &&
         setup_emoji_font &&
         setup_libreoffice_autogen &&
         setup_pacman_config &&
         setup_nginx_config &&
-        setup_drives
+        setup_drives &&
+        setup_qemu_config
 }
 
 function print_help() {
