@@ -188,6 +188,7 @@ function setup_pacman_packages() {
         'tmux'
         'ttf-liberation'
         'ttf-jetbrains-mono-nerd'
+        'noto-fonts'
         'tumbler'
         'ueberzug'
         'unixodbc'
@@ -287,6 +288,9 @@ function setup_git_repositories() {
         'https://github.com/printfdebugging/ipc.git'
         'https://github.com/printfdebugging/learn-opengl.git'
         'https://github.com/printfdebugging/layman.git'
+        'https://github.com/printfdebugging/chat'
+        'https://github.com/printfdebugging/music-player'
+        'https://github.com/printfdebugging/neat-search-results'
 
         'https://gitlab.com/printfdebugging/website'
         'https://gitlab.com/printfdebugging/logs'
