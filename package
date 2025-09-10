@@ -294,6 +294,7 @@ function setup_git_repositories() {
 
         'https://gitlab.com/printfdebugging/website'
         'https://gitlab.com/printfdebugging/logs'
+        'https://github.com/printfdebugging/planner'
 
         'https://github.com/printfdebugging/themes.git'
         'https://gerrit.libreoffice.org/core'
