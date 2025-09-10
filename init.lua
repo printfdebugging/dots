@@ -940,26 +940,6 @@ require("lazy").setup({
         },
       })
       -- Set up lspconfig.
-      local keymap = vim.keymap
-      local on_attach = function(client, bufnr)
-        local opts = { noremap = true, silent = true, buffer = bufnr }
-        keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts) -- show definition, references
-        keymap.set("n", "gD", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
-        keymap.set("n", "gd", "<Cmd>Lspsaga goto_definition<CR>", opts) -- got to declaration
-        keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
-        keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
-        keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
-        keymap.set("n", "<leader>D", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
-        keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
-        keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
-        keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
-        keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
-        keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", opts) -- see outline on right hand side
-        keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-        vim.keymap.set("n", "<C-n>", ":cnext<CR>")
-        vim.keymap.set("n", "<C-p>", ":cprev<CR>")
-      end
-
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local servers = {
         "clangd",
@@ -981,27 +961,22 @@ require("lazy").setup({
       for _, server in ipairs(servers) do
         require("lspconfig")[server].setup({
           capabilities = capabilities,
-          on_attach = on_attach,
         })
       end
 
       require("lspconfig")["rust_analyzer"].setup({
         capabilities = capabilities,
-        on_attach = on_attach,
         cmd = { "rustup", "run", "stable", "rust-analyzer" },
       })
 
       require("lspconfig")["lua_ls"].setup({
         capabilities = capabilities,
-        on_attach = on_attach,
-        settings = { -- custom settings for lua
+        settings = {
           Lua = {
-            -- make the language server recognize "vim" global
             diagnostics = {
               globals = { "vim" },
             },
             workspace = {
-              -- make language server aware of runtime files
               library = {
                 [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                 [vim.fn.stdpath("config") .. "/lua"] = true,
@@ -1172,6 +1147,20 @@ function timelog_entry()
   vim.fn.system('echo "' .. date_time_stamp .. ": " .. log .. '" >> ' .. log_file_path)
 end
 
+function man_or_hover_doc()
+  local word_under_cursor = vim.fn.expand("<cword>")
+  if word_under_cursor == "" then
+    return
+  end
+  if pcall(vim.cmd, "Man 3p" .. word_under_cursor) then
+    return
+  end
+  if pcall(vim.cmd, "Man " .. word_under_cursor) then
+    return
+  end
+  vim.cmd("Lspsaga hover_doc")
+end
+
 vim.g.mapleader = " "
 
 local normal_mode_leader_keymaps = {
@@ -1283,7 +1272,7 @@ local normal_mode_keymaps = {
   { "s", ":source %<CR>" },
   { "<", ":-tabmove<CR>" },
   { ">", ":+tabmove<CR>" },
-  { "K", "<cmd>Lspsaga hover_doc<CR>" },
+  { "K", man_or_hover_doc },
   { "gf", ":Lspsaga lsp_finder<CR>" },
   { "gD", ":Lspsaga peek_definition<CR>" },
   { "gd", ":Lspsaga goto_definition<CR>" },
