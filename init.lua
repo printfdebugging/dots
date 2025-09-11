@@ -496,7 +496,7 @@ require("lazy").setup({
       highlight FloatBorder guibg=#00000000
       highlight TelescopeSelection guibg=#00000000
       highlight TelescopeSelectionCaret guibg=#00000000
-      highlight QuickFixLine guibg=#181818 gui=BOLD
+      highlight QuickFixLine guibg=#3f444a gui=BOLD
       ]])
 
       vim.cmd([[highlight! link CursorLineSign CursorLine]])
