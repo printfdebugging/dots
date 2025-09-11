@@ -471,8 +471,8 @@ require("lazy").setup({
 
       vim.cmd([[
       highlight TabLineSel    guifg=#00222b guibg=#59c2ff
-      highlight TabLineFill   guibg=#00000000
-      highlight TabLine       guibg=#00000000
+      highlight TabLineFill   guibg=#242b38
+      highlight TabLine       guibg=#242b38
       highlight LineNr        guifg=#3f444a
       highlight LineNrAbove   guifg=#3f444a
       highlight LineNrBelow   guifg=#3f444a
@@ -484,7 +484,7 @@ require("lazy").setup({
       highlight GitSignsChangedeleteCul guibg=#21242b guifg=#f38ba8
       highlight GitSignsTopdeleteCul guibg=#21242b guifg=#f38ba8
       highlight GitSignsUntrackedCul guibg=#21242b guifg=#98be65
-      highlight Visual               guibg=#181818 guifg=none gui=bold
+      highlight Visual               guibg=#3f444a guifg=none gui=bold
       highlight @function.builtin   guifg=#51afef
       highlight @markup.link    gui=NONE guifg=#51afef gui=underline
       highlight @label    gui=NONE guifg=#cba6f7 gui=underline
@@ -677,6 +677,7 @@ require("lazy").setup({
     config = function()
       require("lualine").setup({
         options = {
+          theme = "ayu_mirage",
           section_separators = { left = "|", right = "|" },
           component_separators = { left = "|", right = "|" },
         },
