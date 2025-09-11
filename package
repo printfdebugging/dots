@@ -262,6 +262,7 @@ function setup_user_services() {
         'blueman-mechanism.service'
         'libvirtd.service'
         'docker.service'
+        'tlp.service'
     )
     # enable and start services
     for service in "${services[@]}"; do
