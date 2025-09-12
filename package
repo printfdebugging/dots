@@ -188,6 +188,7 @@ function setup_pacman_packages() {
         'tmux'
         'ttf-liberation'
         'ttf-jetbrains-mono-nerd'
+        'ttf-iosevka-nerd'
         'noto-fonts'
         'tumbler'
         'ueberzug'
