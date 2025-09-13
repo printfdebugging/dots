@@ -20,6 +20,7 @@ function setup_pacman_packages() {
         'bluez'
         'bluez-libs'
         'breeze-icons'
+        'breeze'
         'bridge-utils'
         'btop'
         'cargo'
@@ -167,7 +168,7 @@ function setup_pacman_packages() {
         'python-watchdog'
         'qemu'
         'qt5-base'
-        'qt5ct'
+        'qt6ct'
         'qt6-base'
         'redland'
         'ripgrep'
@@ -361,6 +362,11 @@ function setup_gdb_config() {
 function setup_gtk_config() {
     mkdir -p "$HOME/.config/gtk-3.0/"
     cp ./settings.ini "$HOME/.config/gtk-3.0/"
+}
+
+function setup_qt_config() {
+    mkdir -p "$HOME/.config/qt6ct/"
+    cp ./qt6ct.conf "$HOME/.config/qt6ct/qt6ct.conf"
 }
 
 function setup_flameshot_config() {
@@ -567,6 +573,7 @@ function setup_all_packages() {
         setup_tmux_config &&
         setup_gdb_config &&
         setup_gtk_config &&
+        setup_qt_config &&
         setup_flameshot_config &&
         setup_dunst_config &&
         setup_ccache_config &&

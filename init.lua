@@ -1,3 +1,4 @@
+---@diagnostic disable: param-type-mismatch, undefined-global, duplicate-set-field, lowercase-global
 vim.deprecate = function() end
 
 --------------- options ---------------------
@@ -434,7 +435,6 @@ require("lazy").setup({
               -- ["@keyword.type"] = { fg = mocha.blue },
               ["@comment"] = { fg = "#5B6268" },
               -- ["@string"] = { fg = "#CE9178" },
-
               ["@markup.heading.1.markdown"] = { fg = mocha.blue, style = { "bold" } },
               ["@markup.heading.2.markdown"] = { fg = "#A9A1E1", style = { "bold" } },
               ["@markup.heading.3.markdown"] = { fg = "#A9A1E1", style = { "bold" } },
@@ -442,7 +442,6 @@ require("lazy").setup({
               ["@markup.heading.5.markdown"] = { fg = "#A9A1E1", style = { "bold" } },
               ["@markup.heading.6.markdown"] = { fg = "#A9A1E1", style = { "bold" } },
               ["@markup.link.label"] = { fg = mocha.blue, style = { "bold", "underline" } },
-
               RenderMarkdownH1Bg = { fg = mocha.blue, bg = "#282c34", style = { "bold" } },
               RenderMarkdownH2Bg = { fg = "#A9A1E1", bg = "#282c34", style = { "bold" } },
               RenderMarkdownH3Bg = { fg = "#A9A1E1", bg = "#282c34", style = { "bold" } },
@@ -466,9 +465,7 @@ require("lazy").setup({
           },
         },
       })
-
       vim.cmd.colorscheme("catppuccin")
-
       vim.cmd([[
       highlight TabLineSel    guifg=#00222b guibg=#59c2ff
       highlight TabLineFill   guibg=#242b38
@@ -498,7 +495,6 @@ require("lazy").setup({
       highlight TelescopeSelectionCaret guibg=#00000000
       highlight QuickFixLine guibg=#3f444a gui=BOLD
       ]])
-
       vim.cmd([[highlight! link CursorLineSign CursorLine]])
     end,
   },
@@ -564,8 +560,8 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*",
         callback = function(args)
-          current_file_path = vim.fn.expand("%:p")
-          excluded_strings = {
+          local current_file_path = vim.fn.expand("%:p")
+          local excluded_strings = {
             "online",
             "libreoffice",
           }
@@ -1153,10 +1149,10 @@ function man_or_hover_doc()
   if word_under_cursor == "" then
     return
   end
-  if pcall(vim.cmd, "Man 3p" .. word_under_cursor) then
+  if pcall(vim.cmd, "tab Man 3p" .. word_under_cursor) then
     return
   end
-  if pcall(vim.cmd, "Man " .. word_under_cursor) then
+  if pcall(vim.cmd, "tab Man " .. word_under_cursor) then
     return
   end
   vim.cmd("Lspsaga hover_doc")
@@ -1360,5 +1356,9 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "help", "man" },
-  command = "wincmd L",
+  command = "wincmd o",
 })
+
+vim.api.nvim_create_user_command("Help", function(opts)
+  vim.cmd("tab help " .. opts.args)
+end, { nargs = "*" })

@@ -53,6 +53,7 @@ export SAL_DISABLE_OPENCL=1
 export SAL_NO_MOUSEGRABS=T
 export CMAKE_POLICY_VERSION_MINIMUM=3.5
 export MANWIDTH=80
+export MANPAGER='nvim +Man!'
 
 # use libreoffice logging utilities for printfdebugging
 export SAL_LOG="+INFO"
@@ -66,6 +67,7 @@ export EDITOR=nvim
 export GPG_TTY=$(tty)
 export GTK_THEME=Arc-Darkest
 export GPG_AGENT_INFO="$(gpgconf --list-dirs agent-socket)/S.gpg-agent:0:1"
+export QT_QPA_PLATFORMTHEME="qt6ct"
 
 
 # golang exports
