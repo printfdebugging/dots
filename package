@@ -1,0 +1,643 @@
+#!/bin/bash
+
+# keeping things simple, this is one file which declares several functions
+# to do various things like installing packages, enabling services etc. configurations
+# involving more  than one file are cloned as git repositories. single file config
+# files are placed in this directory, all at the root.
+
+function setup_pacman_packages() {
+    pacman_packages=(
+        'abseil-cpp'
+        'ansible'
+        'nginx'
+        'ant'
+        'apr'
+        'base-devel'
+        'bazelisk'
+        'ninja'
+        'stylua'
+        'beanshell'
+        'blender'
+        'blueman'
+        'bluez'
+        'bluez-libs'
+        'breeze'
+        'breeze-icons'
+        'breeze-gtk'
+        'bridge-utils'
+        'btop'
+        'cargo'
+        'cbatticon'
+        'ccache'
+        'chromium'
+        'clang'
+        'clucene'
+        'cmake'
+        'coin-or-mp'
+        'cppunit'
+        'ctags'
+        'curl'
+        'dbus-glib'
+        'shellcheck'
+        'desktop-file-utils'
+        'dnsmasq'
+        'docker'
+        'docker-compose'
+        'doxygen'
+        'dunst'
+        'ebtables'
+        'extra-cmake-modules'
+        'fastfetch'
+        'fd'
+        'feh'
+        'figlet'
+        'flameshot'
+        'flex'
+        'fontconfig'
+        'freetype2'
+        'fzf'
+        'gcc-libs'
+        'gdb'
+        'gdk-pixbuf2'
+        'gimp'
+        'git'
+        'glade'
+        'glm'
+        'go'
+        'gobject-introspection'
+        'gperf'
+        'gpgme'
+        'graphite'
+        'gst-plugins-base-libs'
+        'gtk3'
+        'gtk4'
+        'gvfs'
+        'gvfs-mtp'
+        'harfbuzz'
+        'harfbuzz-icu'
+        'hicolor-icon-theme'
+        'hunspell'
+        'hyphen'
+        'i3lock'
+        'icu'
+        'inkscape'
+        'iptables'
+        'java-environment'
+        'jdk-openjdk'
+        'jre21-openjdk'
+        'junit'
+        'lcms2'
+        'lib32-libcap'
+        'libabw'
+        'libatomic_ops'
+        'libcap'
+        'libcap-ng'
+        'libcdr'
+        'libcmis'
+        'libe-book'
+        'libepoxy'
+        'libepubgen'
+        'libetonyek'
+        'libexttextcat'
+        'libfreehand'
+        'libgl'
+        'libguestfs'
+        'libjpeg'
+        'liblangtag'
+        'libmspub'
+        'libmwaw'
+        'libmythes'
+        'libnma'
+        'libnumbertext'
+        'libodfgen'
+        'liborcus'
+        'libpagemaker'
+        'libpng'
+        'libqxp'
+        'libreoffice'
+        'libstaroffice'
+        'libtommath'
+        'libvisio'
+        'libwpd'
+        'libwpg'
+        'libwps'
+        'libx11'
+        'libxft'
+        'libxinerama'
+        'libxrandr'
+        'libxslt'
+        'libxxf86vm'
+        'libzmf'
+        'lld'
+        'loupe'
+        'lpsolve'
+        'lua'
+        'luarocks'
+        'lxappearance'
+        'man-db'
+        'man-pages'
+        'mariadb-libs'
+        'mdds'
+        'meson'
+        'mpv'
+        'mtpfs'
+        'nasm'
+        'neon'
+        'neovim'
+        'emacs'
+        'netcat'
+        'networkmanager'
+        'network-manager-applet'
+        'nodejs'
+        'npm'
+        'nspr'
+        'nss'
+        'ntfs-3g'
+        'obs-studio'
+        'okular'
+        'openbsd-netcat'
+        'pango'
+        'pasystray'
+        'pavucontrol'
+        'perf'
+        'plasma-framework5'
+        'poco'
+        'poppler'
+        'postgresql-libs'
+        'pulseaudio'
+        'pyright'
+        'python'
+        'python-lxml'
+        'python-pip'
+        'python-polib'
+        'python-watchdog'
+        'qemu'
+        'qt5-base'
+        'qt6ct'
+        'qt6-base'
+        'redland'
+        'ripgrep'
+        'ruff'
+        'sane'
+        'seahorse'
+        'serf'
+        'sh'
+        'shaderc'
+        'shared-mime-info'
+        'sxiv'
+        'thunar'
+        'thunar-media-tags-plugin'
+        'thunar-shares-plugin'
+        'webp-pixbuf-loader'
+        'thunar-volman'
+        'thunderbird'
+        'tigervnc'
+        'tlp'
+        'tmux'
+        'ttf-liberation'
+        'ttf-jetbrains-mono-nerd'
+        'ttf-iosevka-nerd'
+        'noto-fonts'
+        'tumbler'
+        'ueberzug'
+        'unixodbc'
+        'unzip'
+        'valgrind'
+        'vde2'
+        'vinagre'
+        'virt-manager'
+        'virt-viewer'
+        'vscode'
+        'vulkan-radeon'
+        'vulkan-tools'
+        'wget'
+        'xclip'
+        'xcompmgr'
+        'xdotool'
+        'xf86-input-libinput'
+        'xf86-video-amdgpu'
+        'xf86-video-ati'
+        'xmlsec'
+        'xorg-server'
+        'xorg-setxkbmap'
+        'xorg-xauth'
+        'xorg-xinit'
+        'xorg-xprop'
+        'xorg-xrandr'
+        'xorg-xset'
+        'xsel'
+        'xwallpaper'
+        'yarn'
+        'yt-dlp'
+        'zip'
+        'zola'
+        'zsh'
+        'zsh-autosuggestions'
+        'zsh-completions'
+        'zsh-syntax-highlighting'
+        'zxing-cpp'
+    )
+    # install pacman packages
+    for package in "${pacman_packages[@]}"; do
+        sudo pacman -S --noconfirm "$package"
+    done
+}
+
+function setup_aur_packages() {
+    aur_packages=(
+        'brave-bin'
+        'par'
+        'opengl-man-pages'
+        'gtypist'
+        'arc-darkest-theme-git'
+    )
+    # install yay if not already installed
+    if ! which yay >/dev/null 2>&1; then
+        sudo pacman -Sy --noconfirm 'base-devel' 'git' 'unzip'
+        mkdir -p "$HOME/.local/src" && cd "$HOME/.local/src" || exit 1
+        git clone https://aur.archlinux.org/yay-bin.git
+        cd yay-bin && makepkg -si
+    fi
+    # install aur packages
+    for package in "${aur_packages[@]}"; do
+        yay -Sy --noconfirm "$package"
+    done
+}
+
+function setup_user_services() {
+    services=(
+        'bluetooth.service'
+        'nginx.service'
+        'blueman-mechanism.service'
+        'libvirtd.service'
+        'docker.service'
+        'tlp.service'
+    )
+    # enable and start services
+    for service in "${services[@]}"; do
+        sudo systemctl enable "$service"
+        sudo systemctl start "$service"
+    done
+}
+
+function setup_user_groups() {
+    groups=(
+        'libvirt'
+        'kvm'
+        'docker'
+    )
+    # append user to groups
+    for group in "${groups[@]}"; do
+        sudo usermod -aG "$group" "$(whoami)"
+    done
+}
+
+function setup_git_repositories() {
+    git_repositories=(
+        'https://github.com/printfdebugging/dots.git'
+        'https://github.com/printfdebugging/unix-network-programming.git'
+        'https://github.com/printfdebugging/whiteboard'
+        'https://github.com/printfdebugging/learn-opengl.git'
+        'https://github.com/printfdebugging/layman.git'
+        'https://github.com/printfdebugging/chat'
+        'https://github.com/printfdebugging/music-player'
+        'https://github.com/printfdebugging/neat-search-results'
+
+        'https://gitlab.com/printfdebugging/website'
+        'https://gitlab.com/printfdebugging/logs'
+
+        'https://github.com/printfdebugging/themes.git'
+        'https://gerrit.libreoffice.org/core'
+        'https://github.com/CollaboraOnline/online.git'
+    )
+    # clone git repositories in "$HOME/repos"
+    for repository in "${git_repositories[@]}"; do
+        mkdir -p "$HOME/repos" && cd "$HOME/repos" || exit 1
+        git clone "$repository"
+    done
+}
+
+function setup_suckless() {
+    suckless_projects=(
+        'dwm'
+        'st'
+        'dmenu'
+    )
+    # clone and build suckless
+    for suckless in "${suckless_projects[@]}"; do
+        mkdir -p "$HOME/.local/src" && cd "$HOME/.local/src" || exit 1
+        if ! [ -d "$suckless" ]; then
+            git clone "https://github.com/printfdebugging/$suckless.git"
+            cd "$suckless" || exit 1
+            sudo make install
+        fi
+    done
+}
+
+function setup_chromium_extensions() {
+    chromium_extensions=(
+        'bhlhnicpbhignbdhedgjhgdocnmhomnp'
+        'cfhdojbkjhnklbpkdaibdccddilifddb'
+        'dbepggeogbaibhgnhhndojpepiihcmeb'
+        'dpjamkmjmigaoobjbekmfgabipmfilij'
+        'eimadpbcbfnmbkopoojfekhnkhdbieeh'
+        'kchgllkpfcggmdaoopkhlkbcokngahlg'
+    )
+    # create the extension files
+    for extension in "${chromium_extensions[@]}"; do
+        if ! [ -f "/usr/share/chromium/extensions/$extension.json" ]; then
+            sudo mkdir -p "/usr/share/chromium/extensions/"
+            echo '{ "external_update_url": "https://clients2.google.com/service/update2/crx" }' | sudo tee "/usr/share/chromium/extensions/$extension.json"
+        fi
+    done
+}
+
+function setup_neovim_config() {
+    mkdir -p "$HOME/.config/nvim/"
+    cp ./init.lua "$HOME/.config/nvim/"
+}
+
+function setup_mimeapps_config() {
+    mkdir -p "$HOME/.config/nvim/"
+    mkdir -p "$HOME/.local/share/applications"
+    cp ./mimeapps.list "$HOME/.config/mimeapps.list"
+    ln -s "$HOME/.config/mimeapps.list" "$HOME/.local/share/applications/mimeapps.list"
+}
+
+function setup_emacs_config() {
+    mkdir -p "$HOME/.config/emacs/"
+    cp ./init.el "$HOME/.config/emacs/init.el"
+}
+
+function setup_tmux_config() {
+    mkdir -p "$HOME/.config/tmux/"
+    cp ./tmux.conf "$HOME/.config/tmux/"
+}
+
+function setup_gdb_config() {
+    mkdir -p "$HOME/.config/gdb/"
+    cp ./gdbinit "$HOME/.config/gdb/"
+}
+
+function setup_gtk_config() {
+    mkdir -p "$HOME/.config/gtk-3.0/"
+    cp ./settings.ini "$HOME/.config/gtk-3.0/"
+}
+
+function setup_qt_config() {
+    mkdir -p "$HOME/.config/qt6ct/"
+    cp ./qt6ct.conf "$HOME/.config/qt6ct/qt6ct.conf"
+}
+
+function setup_okular_config() {
+    mkdir -p "$HOME/.config"
+    cp ./okularrc "$HOME/.config/okularrc"
+}
+
+function setup_flameshot_config() {
+    mkdir -p "$HOME/.config/flameshot/"
+    cp ./flameshot.ini "$HOME/.config/flameshot/"
+}
+
+function setup_dunst_config() {
+    mkdir -p "$HOME/.config/dunst/"
+    cp ./dunstrc "$HOME/.config/dunst/"
+}
+
+function setup_ccache_config() {
+    mkdir -p "$HOME/.config/ccache/"
+    cp ./ccache.conf "$HOME/.config/ccache/"
+}
+
+function setup_glade_config() {
+    mkdir -p "$HOME/.config/"
+    cp ./glade.conf "$HOME/.config/"
+}
+
+function setup_zsh_config() {
+    cp ./.zshrc ./.zprofile "$HOME"
+    chsh -s /usr/bin/zsh
+    sudo chsh -s /usr/bin/zsh
+}
+
+function setup_vscode_config() {
+    mkdir -p "$HOME/.config/Code - OSS/User/"
+    cp ./extensions.json ./keybindings.json ./settings.json "$HOME/.config/Code - OSS/User/"
+}
+
+function setup_xorg_config() {
+    cp "./.xinitrc" "$HOME/.xinitrc"
+
+    mkdir -p "/etc/X11/xorg.conf.d"
+    sudo cp "./00-keyboard.conf" "/etc/X11/xorg.conf.d"
+    sudo cp "./30-touchpad.conf" "/etc/X11/xorg.conf.d"
+    sudo cp ./user-dirs.dirs "$HOME/.config/user-dirs.dirs"
+}
+
+function setup_bash_scripts() {
+    mkdir -p "$HOME/.local"
+    if ! [ -d "$HOME/.local/bin" ]; then
+        git clone https://github.com/printfdebugging/bin.git "$HOME/.local/bin"
+    fi
+}
+
+function setup_mpv_config() {
+    mkdir -p "$HOME/.config/mpv/"
+    cp ./input.conf ./mpv.conf "$HOME/.config/mpv/"
+}
+
+function setup_wallpaper() {
+    mkdir -p "$HOME/.local/share/wallpapers/"
+    cp ./map.jpg "$HOME/.local/share/wallpapers/"
+}
+
+function setup_qemu_config() {
+    sudo virsh net-start default
+    sudo virsh net-autostart default
+    # uncomment lines in libvirtd.conf
+    lines=(
+        'unix_sock_group = "libvirt"'
+        'unix_sock_rw_perms = "0770"'
+    )
+    for line in "${lines[@]}"; do
+        sudo sed -i "/$line/s/^#//" /etc/libvirt/libvirtd.conf
+    done
+}
+
+function setup_emoji_font() {
+    sudo cp ./twemoji.ttf /usr/share/fonts/
+    sudo cp ./75-twemoji.conf /etc/fonts/conf.d/75-twemoji.conf
+}
+
+function setup_credentials() {
+    mkdir -p "$HOME/.ssh"
+    cp ./.gitconfig ./.gpgkey.asc "$HOME/"
+    cp ./id_ed25519 ./id_ed25519.pub ./cool ./cool.pub ./config "$HOME/.ssh"
+
+    ansible-vault decrypt \
+        "$HOME/.gitconfig" \
+        "$HOME/.gpgkey.asc" \
+        "$HOME/.ssh/id_ed25519" \
+        "$HOME/.ssh/id_ed25519.pub" \
+        "$HOME/.ssh/cool" \
+        "$HOME/.ssh/cool.pub" \
+        "$HOME/.ssh/config"
+}
+
+function setup_libreoffice_autogen() {
+    if [ -d "$HOME/repos/core" ]; then
+        cp ./autogen.input "$HOME/repos/core/autogen.input"
+    fi
+}
+
+function setup_pacman_config() {
+    sudo cp ./mirrorlist /etc/pacman.d/mirrorlist
+    sudo cp ./pacman.conf /etc/pacman.conf
+}
+
+function setup_nginx_config() {
+    sudo cp ./nginx.conf /etc/nginx/nginx.conf
+}
+
+# NOTE: this function is not to be run as a part of the setup process,
+# it downloads around 100G of packages from a tier 1 archlinux mirror.
+# please source the file and run this after the server is setup properly.
+function setup_local_pacman_mirror() {
+    local_folder=/media/external/archlinux
+    remote_mirror=rsync://de.arch.mirror.kescher.at/mirror/arch/
+
+    rsync -rlv \
+        --exclude '/archive' \
+        --exclude '/community' \
+        --exclude '/community-staging' \
+        --exclude '/community-testing' \
+        --exclude '/core-debug' \
+        --exclude '/core-staging' \
+        --exclude '/core-staging-debug' \
+        --exclude '/core-testing' \
+        --exclude '/core-testing-debug' \
+        --exclude '/extra-debug' \
+        --exclude '/extra-staging' \
+        --exclude '/extra-staging-debug' \
+        --exclude '/extra-testing' \
+        --exclude '/extra-testing-debug' \
+        --exclude '/gnome-unstable' \
+        --exclude '/gnome-unstable-debug' \
+        --exclude '/images' \
+        --exclude '/iso' \
+        --exclude '/kde-unstable' \
+        --exclude '/kde-unstable-debug' \
+        --exclude '/latest' \
+        --exclude '/multilib-debug' \
+        --exclude '/multilib-staging' \
+        --exclude '/multilib-staging-debug' \
+        --exclude '/multilib-testing' \
+        --exclude '/multilib-testing-debug' \
+        --exclude '/other' \
+        --exclude '/pool/packages-debug' \
+        --exclude '/staging' \
+        --exclude '/testing' \
+        --exclude '/wsl' \
+        "${remote_mirror}" \
+        "${local_folder}"
+}
+
+function setup_drives() {
+    declare -A external=(
+        [UUID]=6a90a7e3-3732-4b58-8a3a-fbc098a86b7e
+        [PATH]=/media/external/
+        [TYPE]=ext4
+        [OPTIONS]='defaults 0 0'
+    )
+
+    declare -A personal=(
+        [UUID]=18bd0da1-8e29-4d5a-a3bf-4cf8a012699d
+        [PATH]=/media/personal/
+        [TYPE]=ext4
+        [OPTIONS]='defaults 0 0'
+    )
+
+    declare -A projects=(
+        [UUID]=379872b5-a96a-4d1f-ad83-231cc27b7c6a
+        [PATH]=/media/projects/
+        [TYPE]=ext4
+        [OPTIONS]='defaults 0 0'
+    )
+
+    declare -A archive=(
+        [UUID]=4313c35d-7d9e-4e77-871e-7c70fdd1e01d
+        [PATH]=/media/archive/
+        [TYPE]=ext4
+        [OPTIONS]='defaults 0 0'
+    )
+
+    drives=(
+        external
+        projects
+        personal
+        archive
+    )
+
+    for drive_name in "${drives[@]}"; do
+        declare -n drive="$drive_name"
+        if [ "$(lsblk -f | grep -c "${drive[UUID]}")" -eq 0 ]; then
+            continue
+        fi
+        if [ "$(grep -e "${drive[UUID]}" /etc/fstab)" == "" ]; then
+            if ! [ -d "${drive[PATH]}" ]; then
+                mkdir -p "${drive[PATH]}"
+                sudo chown "$(whoami):$(whoami)" "${drive[PATH]}"
+            fi
+            echo "UUID=${drive[UUID]}    ${drive[PATH]}     ${drive[TYPE]}     ${drive[OPTIONS]}" | sudo tee -a /etc/fstab
+        fi
+    done
+}
+
+function setup_all_packages() {
+    setup_pacman_packages &&
+        setup_aur_packages &&
+        setup_credentials &&
+        setup_git_repositories &&
+        setup_user_services &&
+        setup_user_groups &&
+        setup_suckless &&
+        setup_chromium_extensions &&
+        setup_neovim_config &&
+        setup_emacs_config &&
+        setup_tmux_config &&
+        setup_gdb_config &&
+        setup_gtk_config &&
+        setup_qt_config &&
+        setup_okular_config &&
+        setup_flameshot_config &&
+        setup_dunst_config &&
+        setup_ccache_config &&
+        setup_glade_config &&
+        setup_zsh_config &&
+        setup_vscode_config &&
+        setup_xorg_config &&
+        setup_bash_scripts &&
+        setup_mpv_config &&
+        setup_wallpaper &&
+        setup_emoji_font &&
+        setup_libreoffice_autogen &&
+        setup_pacman_config &&
+        setup_nginx_config &&
+        setup_drives &&
+        setup_qemu_config
+}
+
+function print_help() {
+    echo "ERROR: usage
+    1. ./package allpack
+    2. source package; setup_<TAB> # execute individual functions
+NOTE:
+    setup_pacman_packages and setup_aur_packages are prerequisits, so
+    run those first before running any other setup_* function
+"
+}
+
+case "$1" in
+"all") setup_all_packages ;;
+*) print_help ;;
+esac
