@@ -1354,11 +1354,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "help", "man" },
-  command = "wincmd o",
-})
-
 vim.api.nvim_create_user_command("Help", function(opts)
   vim.cmd("tab help " .. opts.args)
 end, { nargs = "*" })
