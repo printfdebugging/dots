@@ -65,7 +65,7 @@ export PATH="/home/$USER/.local/bin:$PATH"
 export PATH="$PATH:/home/printfdebugging/.cargo/bin"
 export EDITOR=nvim
 export GPG_TTY=$(tty)
-export GTK_THEME=Arc-Darkest
+export GTK_THEME="Breeze-Dark"
 export GPG_AGENT_INFO="$(gpgconf --list-dirs agent-socket)/S.gpg-agent:0:1"
 export QT_QPA_PLATFORMTHEME="qt6ct"
 
