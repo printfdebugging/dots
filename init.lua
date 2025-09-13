@@ -922,7 +922,7 @@ require("lazy").setup({
       require("lspsaga").setup({
         ui = {
           border = "single",
-          code_action = "💡",
+          code_action = "",
         },
         definition = {
           keys = {
