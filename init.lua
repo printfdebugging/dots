@@ -1160,17 +1160,6 @@ function custom_tabclose()
   end
 end
 
-function timelog_entry()
-  local date_time_stamp = vim.fn.system('date "+%F %r"')
-  local log_file_path = "/home/printfdebugging/repos/logs/log.md"
-  date_time_stamp = string.gsub(date_time_stamp, "\n", "")
-  local log = vim.fn.input(date_time_stamp .. ": ")
-  if log == "" then
-    return
-  end
-  vim.fn.system('echo "' .. date_time_stamp .. ": " .. log .. '" >> ' .. log_file_path)
-end
-
 function man_or_hover_doc()
   local word_under_cursor = vim.fn.expand("<cword>")
   if word_under_cursor == "" then
@@ -1288,7 +1277,6 @@ local normal_mode_keymaps = {
       end
     end,
   },
-  { "t", timelog_entry },
   { "m", ":MaximizerToggle!<CR>" },
   { "m", ":MaximizerToggle!<CR>" },
   { "z", ":ToggleTerm<CR>" },

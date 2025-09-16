@@ -14,6 +14,7 @@ function setup_pacman_packages() {
         'apr'
         'base-devel'
         'bazelisk'
+        'swtpm'
         'ninja'
         'stylua'
         'beanshell'
@@ -294,25 +295,63 @@ function setup_user_groups() {
 
 function setup_git_repositories() {
     git_repositories=(
-        'https://github.com/printfdebugging/dots.git'
-        'https://github.com/printfdebugging/unix-network-programming.git'
-        'https://github.com/printfdebugging/whiteboard'
-        'https://github.com/printfdebugging/learn-opengl.git'
+        # various dotfiles attempts
+        'https://github.com/printfdebugging/dotfiles'
+        'https://github.com/printfdebugging/pkgbuild-like-dotfiles'
+        'https://github.com/printfdebugging/dots'
+
+        # window manager and scripts
+        'https://github.com/printfdebugging/bin'
+        'https://github.com/printfdebugging/dwm'
+        'https://github.com/printfdebugging/st'
+        'https://github.com/printfdebugging/dmenu'
+
+        # graphics programming projects
+        'https://github.com/printfdebugging/sfml-blueprints'
+        'https://github.com/printfdebugging/skia'
+        'https://github.com/printfdebugging/learn-opengl'
         'https://github.com/printfdebugging/layman.git'
+
+        # books
+        'https://github.com/printfdebugging/unix-network-programming'
+
+        # misc software projects
+        'https://github.com/printfdebugging/whiteboard'
         'https://github.com/printfdebugging/chat'
         'https://github.com/printfdebugging/music-player'
         'https://github.com/printfdebugging/neat-search-results'
 
+        # nvim plugins
+        'https://github.com/printfdebugging/chat.nvim'
+        'https://github.com/printfdebugging/mail.nvim'
+
+        # gitlab projects
         'https://gitlab.com/printfdebugging/website'
         'https://gitlab.com/printfdebugging/logs'
 
-        'https://github.com/printfdebugging/themes.git'
+        # libreoffice projects
+        'https://github.com/printfdebugging/themes'
+        'https://github.com/printfdebugging/keybindings'
         'https://gerrit.libreoffice.org/core'
-        'https://github.com/CollaboraOnline/online.git'
+        'https://github.com/CollaboraOnline/online'
+
+        # other intersting projects from the internet
+        'https://github.com/glfw/glfw'
+        'https://github.com/nicbarker/clay'
+        'https://github.com/pongasoft/emscripten-glfw'
+        'https://github.com/TinyCC/tinycc'
+        'https://github.com/nginx/nginx'
+        'https://github.com/nitrix/glad'
+        'https://github.com/universal-ctags/ctags'
+        'https://github.com/mpv-player/mpv'
+        'https://github.com/fogleman/Craft'
+        'https://github.com/antirez/kilo'
+        'https://github.com/skx/kilua'
+        'https://github.com/bakkeby/dwm-commented'
     )
-    # clone git repositories in "$HOME/repos"
+    # clone git repositories
     for repository in "${git_repositories[@]}"; do
-        mkdir -p "$HOME/repos" && cd "$HOME/repos" || exit 1
+        cd "/media/projects" || exit 1
         git clone "$repository"
     done
 }
@@ -325,12 +364,11 @@ function setup_suckless() {
     )
     # clone and build suckless
     for suckless in "${suckless_projects[@]}"; do
-        mkdir -p "$HOME/.local/src" && cd "$HOME/.local/src" || exit 1
-        if ! [ -d "$suckless" ]; then
-            git clone "https://github.com/printfdebugging/$suckless.git"
-            cd "$suckless" || exit 1
-            sudo make install
+        suckless_dir="/media/projects/$suckless"
+        if ! [ -d "$suckless_dir" ]; then
+            git clone "https://github.com/printfdebugging/$suckless.git" "$suckless_dir"
         fi
+        sudo make -C "$suckless_dir" install
     done
 }
 
@@ -434,13 +472,6 @@ function setup_xorg_config() {
     sudo cp ./user-dirs.dirs "$HOME/.config/user-dirs.dirs"
 }
 
-function setup_bash_scripts() {
-    mkdir -p "$HOME/.local"
-    if ! [ -d "$HOME/.local/bin" ]; then
-        git clone https://github.com/printfdebugging/bin.git "$HOME/.local/bin"
-    fi
-}
-
 function setup_mpv_config() {
     mkdir -p "$HOME/.config/mpv/"
     cp ./input.conf ./mpv.conf "$HOME/.config/mpv/"
@@ -485,8 +516,8 @@ function setup_credentials() {
 }
 
 function setup_libreoffice_autogen() {
-    if [ -d "$HOME/repos/core" ]; then
-        cp ./autogen.input "$HOME/repos/core/autogen.input"
+    if [ -d "/media/projects/core" ]; then
+        cp ./autogen.input "/media/projects/core/autogen.input"
     fi
 }
 
@@ -578,18 +609,21 @@ function setup_drives() {
         archive
     )
 
+    modified=false
     for drive_name in "${drives[@]}"; do
         declare -n drive="$drive_name"
-        if [ "$(lsblk -f | grep -c "${drive[UUID]}")" -eq 0 ]; then
-            continue
-        fi
+        [ "$(lsblk -f | grep -c "${drive[UUID]}")" -eq 0 ] && continue
+
         if [ "$(grep -e "${drive[UUID]}" /etc/fstab)" == "" ]; then
             if ! [ -d "${drive[PATH]}" ]; then
                 mkdir -p "${drive[PATH]}"
                 sudo chown "$(whoami):$(whoami)" "${drive[PATH]}"
             fi
             echo "UUID=${drive[UUID]}    ${drive[PATH]}     ${drive[TYPE]}     ${drive[OPTIONS]}" | sudo tee -a /etc/fstab
+            modified=true
         fi
+
+        [ "$modified" ] && sudo mount -a
     done
 }
 
@@ -597,6 +631,7 @@ function setup_all_packages() {
     setup_pacman_packages &&
         setup_aur_packages &&
         setup_credentials &&
+        setup_drives &&
         setup_git_repositories &&
         setup_user_services &&
         setup_user_groups &&
@@ -616,14 +651,12 @@ function setup_all_packages() {
         setup_zsh_config &&
         setup_vscode_config &&
         setup_xorg_config &&
-        setup_bash_scripts &&
         setup_mpv_config &&
         setup_wallpaper &&
         setup_emoji_font &&
         setup_libreoffice_autogen &&
         setup_pacman_config &&
         setup_nginx_config &&
-        setup_drives &&
         setup_qemu_config
 }
 

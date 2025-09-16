@@ -43,7 +43,7 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 
 # libreoffice exports
-export LOCOREPATH=/home/printfdebugging/repos/core
+export LOCOREPATH=/media/projects/core
 export COOL_SERVE_FROM_FS=1
 export COOL_DEBUG=1
 export QT5DIR=/usr/lib/qt5
@@ -61,7 +61,7 @@ export SAL_LOG_FILE=~/downloads/logfile
 
 
 # system exports
-export PATH="/home/$USER/.local/bin:$PATH"
+export PATH="/media/projects/bin:$PATH"
 export PATH="$PATH:/home/printfdebugging/.cargo/bin"
 export EDITOR=nvim
 export GPG_TTY=$(tty)
@@ -113,11 +113,11 @@ alias p="projects"
 
 # path aliases
 alias  c="cd"
-alias  l="cd /home/$USER/repos/core/"
-alias  o="cd /home/$USER/repos/online"
-alias cr="cd ~/repos/"
-alias  b="cd ~/.local/bin/"
-alias  n="cd ~/repos/notes/ && nvim"
+alias cr="cd /media/projects/"
+alias  l="cd /media/projects/core/"
+alias  o="cd /media/projects/online"
+alias  b="cd /media/projects/bin"
+alias  n="cd /media/projects/notes/ && nvim"
 
 
 # git aliases
@@ -133,9 +133,9 @@ alias  msu="sudo make clean install"
 alias  hss="zola serve"
 alias  sdm="sudo ln -s /etc/sv/gdm /var/service/"
 alias  kdm="sudo rm -rf /var/service/gdm"
-alias    e="export SAL_USE_VCLPLUGIN=kf5;  /home/printfdebugging/repos/core/instdir/program/soffice"
-alias    f="export SAL_USE_VCLPLUGIN=kf6;  /home/printfdebugging/repos/core/instdir/program/soffice"
-alias    g="export SAL_USE_VCLPLUGIN=gtk3; /home/printfdebugging/repos/core/instdir/program/soffice"
+alias    e="export SAL_USE_VCLPLUGIN=kf5;  /media/projects/core/instdir/program/soffice"
+alias    f="export SAL_USE_VCLPLUGIN=kf6;  /media/projects/core/instdir/program/soffice"
+alias    g="export SAL_USE_VCLPLUGIN=gtk3; /media/projects/core/instdir/program/soffice"
 alias dv='yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -S "res:1080" "$@"'
 alias da='yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -S "res:1080" -x "$@"'
 
