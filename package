@@ -351,8 +351,10 @@ function setup_git_repositories() {
     )
     # clone git repositories
     for repository in "${git_repositories[@]}"; do
-        cd "/media/projects" || exit 1
-        git clone "$repository"
+        (
+            cd "/media/projects" || exit 1
+            git clone "$repository" || echo "failed to clone $repository"
+        )
     done
 }
 
