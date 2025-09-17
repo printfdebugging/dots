@@ -145,7 +145,6 @@ function setup_pacman_packages() {
         'nasm'
         'neon'
         'neovim'
-        'emacs'
         'netcat'
         'networkmanager'
         'network-manager-applet'
@@ -404,11 +403,6 @@ function setup_mimeapps_config() {
     ln -s "$HOME/.config/mimeapps.list" "$HOME/.local/share/applications/mimeapps.list"
 }
 
-function setup_emacs_config() {
-    mkdir -p "$HOME/.config/emacs/"
-    cp ./init.el "$HOME/.config/emacs/init.el"
-}
-
 function setup_tmux_config() {
     mkdir -p "$HOME/.config/tmux/"
     cp ./tmux.conf "$HOME/.config/tmux/"
@@ -640,7 +634,6 @@ function setup_all_packages() {
         setup_suckless &&
         setup_chromium_extensions &&
         setup_neovim_config &&
-        setup_emacs_config &&
         setup_tmux_config &&
         setup_gdb_config &&
         setup_gtk_config &&
