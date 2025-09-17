@@ -396,6 +396,11 @@ function setup_neovim_config() {
     cp ./init.lua "$HOME/.config/nvim/"
 }
 
+function disable_kwallet_config() {
+    mkdir -p "$HOME/.config/"
+    cp ./kwalletrc "$HOME/.config/kwalletrc"
+}
+
 function setup_mimeapps_config() {
     mkdir -p "$HOME/.config/nvim/"
     mkdir -p "$HOME/.local/share/applications"
