@@ -545,6 +545,8 @@ function setup_emoji_font() {
 
 function setup_credentials() {
     mkdir -p "$HOME/.ssh"
+    mkdir -p "$HOME/.gnupg"
+
     cp ./.gitconfig \
         ./.gpgkey.asc \
         ./.pgpkey.asc \
@@ -560,15 +562,17 @@ function setup_credentials() {
         ./config \
         "$HOME/.ssh"
 
-    [ ! -d "$HOME/.gnupg/" ] && mkdir -p "$HOME/.gnupg"
-    cp ./gpg-agent.conf "$HOME/.gnupg/gpg-agent.conf"
+    cp ./gpg-agent.conf \
+        ./gpg.conf \
+        "$HOME/.gnupg"
 
     ansible-vault decrypt \
         "$HOME/.gitconfig" \
         "$HOME/.gpgkey.asc" \
         "$HOME/.pgpkey.asc" \
-        "$HOME/.pam-gnupg.asc" \
+        "$HOME/.pam-gnupg" \
         "$HOME/.gnupg/gpg-agent.conf" \
+        "$HOME/.gnupg/gpg.conf" \
         "$HOME/.ssh/id_ed25519" \
         "$HOME/.ssh/id_ed25519.pub" \
         "$HOME/.ssh/printfdebugging" \
@@ -577,7 +581,11 @@ function setup_credentials() {
         "$HOME/.ssh/cool.pub" \
         "$HOME/.ssh/config"
 
-    gpg --trust-model always --import "$HOME/.pgpkey.asc"
+    gpg --import "$HOME/.pgpkey.asc"
+
+    chown -R "$(whoami)" "$HOME/.gnupg"
+    find "$HOME/.gnupg" -type f -exec chmod 600 {} \;
+    find "$HOME/.gnupg" -type d -exec chmod 700 {} \;
 }
 
 function setup_libreoffice_autogen() {
