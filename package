@@ -405,6 +405,10 @@ function setup_pass_store() {
     if ! [ -d "$HOME/.password-store" ]; then
         git clone git@github.com:printfdebugging/password-store "$HOME/.password-store"
     fi
+
+    if ! [ -f "$HOME/.password-store/.git/hooks/post-commit" ]; then
+        printf "#\!/bin/bash\n\ngit push" | tee "$HOME/.password-store/.git/hooks/post-commit"
+    fi
 }
 
 function setup_pam_gnupg_config() {
