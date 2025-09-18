@@ -19,6 +19,10 @@ function setup_pacman_packages() {
         'stylua'
         'beanshell'
         'blender'
+        'pass'
+        'pass-otp'
+        'pam'
+        'zbar'
         'blueman'
         'bluez'
         'bluez-libs'
@@ -246,6 +250,7 @@ function setup_pacman_packages() {
 function setup_aur_packages() {
     aur_packages=(
         'brave-bin'
+        'pam-gnupg'
         'par'
         'opengl-man-pages'
         'gtypist'
@@ -396,6 +401,43 @@ function setup_neovim_config() {
     cp ./init.lua "$HOME/.config/nvim/"
 }
 
+function setup_pass_store() {
+    if ! [ -d "$HOME/.password-store" ]; then
+        git clone git@github.com:printfdebugging/password-store "$HOME/.password-store"
+    fi
+}
+
+function setup_pam_gnupg_config() {
+    system_login_file="/etc/pam.d/system-local-login"
+    if [ -f "$system_login_file" ]; then
+        lines=(
+            'auth     optional  pam_gnupg.so store-only'
+            'session  optional  pam_gnupg.so'
+        )
+        for line in "${lines[@]}"; do
+            if [ "$(grep -c "$line" "$system_login_file")" -eq 0 ]; then
+                echo "$line" | sudo tee -a "$system_login_file"
+            fi
+        done
+    else
+        echo "$system_login_file file not found" && exit 1
+    fi
+
+    i3lock_file="/etc/pam.d/i3lock"
+    if [ -f "$i3lock_file" ]; then
+        lines=(
+            'auth     optional  pam_gnupg.so'
+        )
+        for line in "${lines[@]}"; do
+            if [ "$(grep -c "$line" "$i3lock_file")" -eq 0 ]; then
+                echo "$line" | sudo tee -a "$i3lock_file"
+            fi
+        done
+    else
+        echo "$i3lock_file file not found" && exit 1
+    fi
+}
+
 function disable_kwallet_config() {
     mkdir -p "$HOME/.config/"
     cp ./kwalletrc "$HOME/.config/kwalletrc"
@@ -503,12 +545,30 @@ function setup_emoji_font() {
 
 function setup_credentials() {
     mkdir -p "$HOME/.ssh"
-    cp ./.gitconfig ./.gpgkey.asc "$HOME/"
-    cp ./id_ed25519 ./id_ed25519.pub ./printfdebugging ./printfdebugging.pub ./cool ./cool.pub ./config "$HOME/.ssh"
+    cp ./.gitconfig \
+        ./.gpgkey.asc \
+        ./.pgpkey.asc \
+        ./.pam-gnupg \
+        "$HOME/"
+
+    cp ./id_ed25519 \
+        ./id_ed25519.pub \
+        ./printfdebugging \
+        ./printfdebugging.pub \
+        ./cool \
+        ./cool.pub \
+        ./config \
+        "$HOME/.ssh"
+
+    [ ! -d "$HOME/.gnupg/" ] && mkdir -p "$HOME/.gnupg"
+    cp ./gpg-agent.conf "$HOME/.gnupg/gpg-agent.conf"
 
     ansible-vault decrypt \
         "$HOME/.gitconfig" \
         "$HOME/.gpgkey.asc" \
+        "$HOME/.pgpkey.asc" \
+        "$HOME/.pam-gnupg.asc" \
+        "$HOME/.gnupg/gpg-agent.conf" \
         "$HOME/.ssh/id_ed25519" \
         "$HOME/.ssh/id_ed25519.pub" \
         "$HOME/.ssh/printfdebugging" \
@@ -516,6 +576,8 @@ function setup_credentials() {
         "$HOME/.ssh/cool" \
         "$HOME/.ssh/cool.pub" \
         "$HOME/.ssh/config"
+
+    gpg --trust-model always --import "$HOME/.pgpkey.asc"
 }
 
 function setup_libreoffice_autogen() {
@@ -630,7 +692,18 @@ function setup_drives() {
     done
 }
 
-function setup_all_packages() {
+function print_help() {
+    echo "ERROR: usage
+    1. ./package allpack
+    2. source package; setup_<TAB> # execute individual functions
+NOTE:
+    setup_pacman_packages and setup_aur_packages are prerequisits, so
+    run those first before running any other setup_* function
+"
+}
+
+case "$1" in
+"all")
     setup_pacman_packages &&
         setup_aur_packages &&
         setup_credentials &&
@@ -660,19 +733,13 @@ function setup_all_packages() {
         setup_pacman_config &&
         setup_nginx_config &&
         setup_qemu_config
-}
-
-function print_help() {
-    echo "ERROR: usage
-    1. ./package allpack
-    2. source package; setup_<TAB> # execute individual functions
-NOTE:
-    setup_pacman_packages and setup_aur_packages are prerequisits, so
-    run those first before running any other setup_* function
-"
-}
-
-case "$1" in
-"all") setup_all_packages ;;
-*) print_help ;;
+    ;;
+"passwords")
+    setup_credentials &&
+        setup_pass_store &&
+        setup_pam_gnupg_config
+    ;;
+*)
+    print_help
+    ;;
 esac
