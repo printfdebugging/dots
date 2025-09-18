@@ -15,6 +15,7 @@ function setup_pacman_packages() {
         'base-devel'
         'bazelisk'
         'swtpm'
+        'chafa'
         'ninja'
         'stylua'
         'beanshell'
