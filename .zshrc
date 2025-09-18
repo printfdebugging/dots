@@ -16,13 +16,6 @@ setopt PROMPT_SUBST
 bindkey -v
 export KEYTIMEOUT=1
 
-
-# find file history in cache directory
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
-
-
 # tab autocompletion settings
 autoload -U compinit
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS} "ma=48;2;255;0;0;38;2;0;255;0"
@@ -154,4 +147,4 @@ alias   ll='ls -al --color=auto'
 # for gnome TEMPORARY (don't add to dotfiles)
 xset r rate 300 50
 setxkbmap -option caps:swapescape
-
+unset HISTFILE
