@@ -1,16 +1,22 @@
 #!/bin/bash
 
-if ! [ "$(find /sys/class/power_supply | grep -c "BAT.*")" -eq 0 ]; then
-    cbatticon &
-fi
-
-dispscript
+# run various utility daemons
 flameshot &
 nm-applet &
 pasystray &
 blueman-applet &
-xcompmgr &
 dunst &
+[ "$(find /sys/class/power_supply | grep -c "BAT.*")" -ne 0 ] && cbatticon &
+
+# run display script and compositor
+dispscript
+xcompmgr &
+
+# start neccessary programs
+thunderbird &
+thunar &
+browser &
+st &
 
 session=${1:-dwm}
 
