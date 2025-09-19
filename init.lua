@@ -712,25 +712,14 @@ require("lazy").setup({
         ),
 
         s(
-          "meta",
-          fmt(
-            [[
---------------------------------------------------------------------------------
-title: *<>*
-task: <>
-mentors: <>
-				    ]],
-            {
-              f(function(_, snip)
-                return vim.fn.expand("%:t")
-              end, {}),
-              i(1),
-              i(2),
-            },
-            {
-              delimiters = "<>",
-            }
-          )
+          "title",
+          fmt("*<>*", {
+            f(function(_, snip)
+              return vim.fn.expand("%:t")
+            end, {}),
+          }, {
+            delimiters = "<>",
+          })
         ),
 
         s(
@@ -1160,6 +1149,17 @@ function custom_tabclose()
   end
 end
 
+function timelog_entry()
+  local date_time_stamp = vim.fn.system('date "+%F %r"')
+  local log_file_path = "/media/projects/logs/timelog.md"
+  date_time_stamp = string.gsub(date_time_stamp, "\n", "")
+  local log = vim.fn.input("log: ")
+  if log == "" then
+    return
+  end
+  vim.fn.system('echo "' .. date_time_stamp .. ": " .. log .. '" >> ' .. log_file_path)
+end
+
 function man_or_hover_doc()
   local word_under_cursor = vim.fn.expand("<cword>")
   if word_under_cursor == "" then
@@ -1220,6 +1220,7 @@ local normal_mode_leader_keymaps = {
 }
 
 local normal_mode_keymaps = {
+  { "t", timelog_entry },
   {
     "<C-a>",
     function()
