@@ -382,7 +382,6 @@ function setup_suckless() {
 function setup_chromium_extensions() {
     chromium_extensions=(
         'bhlhnicpbhignbdhedgjhgdocnmhomnp'
-        'cfhdojbkjhnklbpkdaibdccddilifddb'
         'dbepggeogbaibhgnhhndojpepiihcmeb'
         'dpjamkmjmigaoobjbekmfgabipmfilij'
         'eimadpbcbfnmbkopoojfekhnkhdbieeh'
