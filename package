@@ -5,6 +5,296 @@
 # involving more  than one file are cloned as git repositories. single file config
 # files are placed in this directory, all at the root.
 
+# NOTE: this is not called directly, but in setup_packages()
+# so that it runs only on voidlinux
+function setup_xbps_packages() {
+    xbps_packages=(
+        'dbus'
+        'NetworkManager'
+        'tlp'
+        'flameshot'
+        'mpv'
+        'git'
+        'openssh'
+        'vscode'
+        'zlib-devel'
+        'libjpeg-turbo-devel'
+        'clucene-devel'
+        'expat-devel'
+        'xmlsec1-devel'
+        'nss-devel'
+        'nspr-devel'
+        'librevenge-devel'
+        'libodfgen-devel'
+        'libepubgen-devel'
+        'libwpd-devel'
+        'libwpg-devel'
+        'libwps-devel'
+        'libvisio-devel'
+        'libcdr-devel'
+        'libmspub-devel'
+        'libmwaw-devel'
+        'libetonyek-devel'
+        'libfreehand-devel'
+        'libe-book-devel'
+        'libabw-devel'
+        'libpagemaker-devel'
+        'libqxp-devel'
+        'libzmf-devel'
+        'libstaroffice-devel'
+        'lcms2-devel'
+        'libcppunit-devel'
+        'freetype-devel'
+        'libxslt-devel'
+        'libgcrypt-devel'
+        'libxml2-devel'
+        'python3-devel'
+        'libcurl-devel'
+        'boost-devel'
+        'mdds'
+        'frozen'
+        'glm'
+        'unixodbc-devel'
+        'libldap-devel'
+        'sane-devel'
+        'icu-devel'
+        'liborcus-devel'
+        'graphite-devel'
+        'harfbuzz-devel'
+        'libargon2-devel'
+        'redland-devel'
+        'hunspell-devel'
+        'zxcvbn-c-devel'
+        'zxing-cpp-devel'
+        'box2d-devel'
+        'hyphen-devel'
+        'mythes-devel'
+        'CoinMP-devel'
+        'lpsolve-devel'
+        'libexttextcat-devel'
+        'libnumbertext-devel'
+        'libepoxy-devel'
+        'cairo-devel'
+        'liblangtag-devel'
+        'libpng-devel'
+        'tiff-devel'
+        'libwebp-devel'
+        'fontconfig-devel'
+        'libcmis-devel'
+        'gobject-introspection'
+        'libgirepository-devel'
+        'libglib-devel'
+        'openssl-devel'
+        'libXrender-devel'
+        'libbluetooth-devel'
+        'gpgmepp-devel'
+        'libXinerama-devel'
+        'libXt-devel'
+        'libX11-devel'
+        'libICE-devel'
+        'libSM-devel'
+        'libopenjpeg2-devel'
+        'abseil-cpp-devel'
+        'poppler-cpp-devel'
+        'gtk+3-devel'
+        'gtk4-devel'
+        'gst-plugins-base1-devel'
+        'qt6-base-devel'
+        'qt6-multimedia-devel'
+        'qt5-qmake'
+        'qt5-devel'
+        'kf6-kio-devel'
+        'kf6-frameworkintegration-devel'
+        'libmariadbclient-devel'
+        'postgresql-libs-devel'
+        'libfbclient3-devel'
+        'libatomic_ops-devel'
+        'automake'
+        'flex'
+        'gperf'
+        'hyphen'
+        'icu'
+        'libtool'
+        'openldap'
+        'which'
+        'gettext'
+        'xz'
+        'tar'
+        'perl-Archive-Zip'
+        'pkg-config'
+        'sane'
+        'unzip'
+        'zip'
+        'python3-setuptools'
+        'fontforge'
+        'python3-lxml'
+        'qt6-base'
+        'gnupg'
+        'glib-devel'
+        'openjdk21'
+        'apache-ant'
+        'beanshell'
+        'rhino'
+        'hsqldb1.8.0'
+        'llvm18'
+        'llvm18-devel'
+        'nasm'
+        'ccache'
+        'meson'
+        'lld'
+        'zsh'
+        'zsh-syntax-highlighting'
+        'zsh-completions'
+        'zsh-autosuggestions'
+        'gnupg2'
+        'base-devel'
+        'libX11-devel'
+        'libXft-devel'
+        'libXinerama-devel'
+        'harfbuzz-devel'
+        'freetype'
+        'libvirt'
+        'virt-manager'
+        'virt-manager-tools'
+        'qemu'
+        'polkit'
+        'xorg-server'
+        'xinit'
+        'xrandr'
+        'setxkbmap'
+        'xset'
+        'xcompmgr'
+        'xwallpaper'
+        'xclip'
+        'xsel'
+        'dunst'
+        'gdb'
+        'thunderbird'
+        'vscode'
+        'par'
+        'lua'
+        'cmake'
+        'extra-cmake-modules'
+        'ansible'
+        'neofetch'
+        'man-db'
+        'man-pages'
+        'man-pages-devel'
+        'man-pages-posix'
+        'btop'
+        'vim-huge'
+        'pasystray'
+        'pavucontrol'
+        'pulseaudio'
+        'unzip'
+        'NetworkManager'
+        'network-manager-applet'
+        'ripgrep'
+        'Thunar'
+        'tumbler-plugins-extra'
+        'go'
+        'xdotool'
+        'xprop'
+        'netcat'
+        'python3-watchdog'
+        'libreoffice'
+        'loupe'
+        'Bear'
+        'hugo'
+        'mtpfs'
+        'mpv'
+        'okular'
+        'gdb'
+        'rr'
+        'perf'
+        'ntfs-3g'
+        'obs'
+        'glade3'
+        'luarocks'
+        'qt5-styleplugins'
+        'qt5ct'
+        'ruff'
+        'i3lock-fancy'
+        'SFML-devel'
+        'glfw-devel'
+        'mesa-vulkan-radeon'
+        'Vulkan-Tools'
+        'vulkan-loader-devel'
+        'libXxf86vm-devel'
+        'glm'
+        'shaderc'
+        'gimp'
+        'inkscape'
+        'xf86-video-amdgpu'
+        'xf86-video-ati'
+        'xf86-input-libinput'
+        'yarn'
+        'wget'
+        'curl'
+        'fontconfig'
+        'clang-tools-extra18'
+        'libnma'
+        'gtypist'
+        'ueberzug'
+        'xauth'
+        'pyright'
+        'xtools'
+        'git-review'
+        'fzf'
+        'fd'
+        'figlet'
+        'figlet-fonts'
+        'lolcat-c'
+        'seahorse'
+        'valgrind'
+        'ctags'
+        'sxiv'
+        'feh'
+        'openjdk21'
+        'google-fonts-ttf'
+        'python3-pip'
+        'cargo'
+        'zola'
+        'tlp'
+        'cbatticon'
+        'tigervnc'
+        'blender'
+        'vinagre'
+        'yt-dlp'
+        'gdk-pixbuf'
+        'lxappearance'
+        'breeze-icons'
+        'tmux'
+        'chromium'
+        'neovim'
+        'git'
+        'nodejs'
+        'libcap-devel'
+        'libcap-ng-devel'
+        'libpng-devel'
+        'poco-devel'
+        'cpputest'
+        'nodejs'
+        'chromium'
+        'python3-lxml'
+        'python3-polib'
+        'pam-devel'
+        'bluez'
+        'blueman'
+        'chafa'
+        'nginx'
+        'ninja'
+        'pass'
+        'pass-otp'
+    )
+    # install pacman packages
+    for package in "${xbps_packages[@]}"; do
+        sudo xbps -Sy "$package"
+    done
+}
+
+# NOTE: this is not called directly, but in setup_packages() so
+# that it runs only on archlinux
 function setup_pacman_packages() {
     pacman_packages=(
         'abseil-cpp'
@@ -248,6 +538,8 @@ function setup_pacman_packages() {
     done
 }
 
+# NOTE: this is not called directly, but in setup_packages() so
+# that it runs only on archlinux
 function setup_aur_packages() {
     aur_packages=(
         'brave-bin'
@@ -270,7 +562,21 @@ function setup_aur_packages() {
     done
 }
 
-function setup_user_services() {
+function setup_packages() {
+    case "$OSTYPE" in
+    "linux-gnu")
+        source /etc/os-release
+        case "$ID" in
+        void) setup_xbps_packages ;;
+        arch) setup_pacman_packages && setup_aur_packages ;;
+        *) echo "unsupported linux-gnu distribution" && exit 1 ;;
+        esac
+        ;;
+    *) echo "unsupported os" && exit 1 ;;
+    esac
+}
+
+function setup_services_archlinux() {
     services=(
         'bluetooth.service'
         'nginx.service'
@@ -286,6 +592,49 @@ function setup_user_services() {
     done
 }
 
+function setup_services_voidlinux() {
+    services_to_enable=(
+        'bluetoothd'
+        'dbus'
+        'NetworkManager'
+        'tlp'
+        'polkitd'
+        'libvirtd'
+        'virtlockd'
+        'virtlogd'
+    )
+    # enable and start services
+    for service in "${services_to_enable[@]}"; do
+        if [ -d "/etc/sv/$service" ]; then
+            sudo ln -s "/etc/sv/$service" "/var/service"
+        fi
+    done
+
+    services_to_disable=(
+        'dhcpcd'
+        'wpa_supplicant'
+        'wicd'
+    )
+    # disable and stop services
+    for service in "${services_to_disable[@]}"; do
+        sudo rm -rf "/var/service/$service"
+    done
+}
+
+function setup_services() {
+    case "$OSTYPE" in
+    "linux-gnu")
+        source /etc/os-release
+        case "$ID" in
+        void) setup_services_voidlinux ;;
+        arch) setup_services_archlinux ;;
+        *) echo "unsupported linux-gnu distribution" && exit 1 ;;
+        esac
+        ;;
+    *) echo "unsupported os" && exit 1 ;;
+    esac
+}
+
 function setup_user_groups() {
     groups=(
         'libvirt'
@@ -298,6 +647,9 @@ function setup_user_groups() {
     done
 }
 
+# NOTE: this function should be called after setup_drives as that
+# function mounts the drives if they are available, or creates
+# directories and sets user permissions.
 function setup_git_repositories() {
     git_repositories=(
         # various dotfiles attempts
@@ -512,7 +864,11 @@ function setup_zsh_config() {
 
 function setup_vscode_config() {
     mkdir -p "$HOME/.config/Code - OSS/User/"
-    cp ./extensions.json ./keybindings.json ./settings.json "$HOME/.config/Code - OSS/User/"
+
+    cp ./extensions.json \
+        ./keybindings.json \
+        ./settings.json \
+        "$HOME/.config/Code - OSS/User/"
 }
 
 function setup_xorg_config() {
@@ -597,15 +953,40 @@ function setup_credentials() {
     find "$HOME/.gnupg" -type d -exec chmod 700 {} \;
 }
 
+# NOTE: this function should be run after the
+# setup_git_repositories() or else it won't do anything.
 function setup_libreoffice_autogen() {
     if [ -d "/media/projects/core" ]; then
         cp ./autogen.input "/media/projects/core/autogen.input"
     fi
 }
 
+# NOTE: this is not called directly, but in setup_package_manager_config()
+# so that it runs only on voidlinux
 function setup_pacman_config() {
     sudo cp ./mirrorlist /etc/pacman.d/mirrorlist
     sudo cp ./pacman.conf /etc/pacman.conf
+}
+
+# NOTE: this is not called directly, but in setup_package_manager_config()
+# so that it runs only on voidlinux
+function setup_xbps_config() {
+    sudo cp /usr/share/xbps.d/00-repository-main.conf /etc/xbps.d/00-repository-main.conf
+    sudo xbps-install -Syu xbps
+}
+
+function setup_package_manager_config() {
+    case "$OSTYPE" in
+    "linux-gnu")
+        source /etc/os-release
+        case "$ID" in
+        void) setup_xbps_config ;;
+        arch) setup_pacman_config ;;
+        *) echo "unsupported linux-gnu distribution" && exit 1 ;;
+        esac
+        ;;
+    *) echo "unsupported os" && exit 1 ;;
+    esac
 }
 
 function setup_nginx_config() {
@@ -694,13 +1075,13 @@ function setup_drives() {
     modified=false
     for drive_name in "${drives[@]}"; do
         declare -n drive="$drive_name"
-        [ "$(lsblk -f | grep -c "${drive[UUID]}")" -eq 0 ] && continue
+        if ! [ -d "${drive[PATH]}" ]; then
+            mkdir -p "${drive[PATH]}"
+            sudo chown "$(whoami):$(whoami)" "${drive[PATH]}"
+        fi
 
+        [ "$(lsblk -f | grep -c "${drive[UUID]}")" -eq 0 ] && continue
         if [ "$(grep -e "${drive[UUID]}" /etc/fstab)" == "" ]; then
-            if ! [ -d "${drive[PATH]}" ]; then
-                mkdir -p "${drive[PATH]}"
-                sudo chown "$(whoami):$(whoami)" "${drive[PATH]}"
-            fi
             echo "UUID=${drive[UUID]}    ${drive[PATH]}     ${drive[TYPE]}     ${drive[OPTIONS]}" | sudo tee -a /etc/fstab
             modified=true
         fi
@@ -721,12 +1102,12 @@ NOTE:
 
 case "$1" in
 "all")
-    setup_pacman_packages &&
-        setup_aur_packages &&
+    setup_package_manager_config &&
+        setup_packages &&
         setup_credentials &&
         setup_drives &&
         setup_git_repositories &&
-        setup_user_services &&
+        setup_services &&
         setup_user_groups &&
         setup_suckless &&
         setup_chromium_extensions &&
@@ -747,7 +1128,6 @@ case "$1" in
         setup_wallpaper &&
         setup_emoji_font &&
         setup_libreoffice_autogen &&
-        setup_pacman_config &&
         setup_nginx_config &&
         setup_qemu_config
     ;;
