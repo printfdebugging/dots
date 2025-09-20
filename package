@@ -305,6 +305,10 @@ function setup_git_repositories() {
         'https://github.com/printfdebugging/pkgbuild-like-dotfiles'
         'https://github.com/printfdebugging/dots'
 
+        # private writings
+        'https://github.com/printfdebugging/logs'
+        'https://github.com/printfdebugging/journal'
+
         # window manager and scripts
         'https://github.com/printfdebugging/bin'
         'https://github.com/printfdebugging/dwm'
@@ -323,6 +327,7 @@ function setup_git_repositories() {
         # misc software projects
         'https://github.com/printfdebugging/whiteboard'
         'https://github.com/printfdebugging/chat'
+        'https://github.com/printfdebugging/chronophage'
         'https://github.com/printfdebugging/music-player'
         'https://github.com/printfdebugging/neat-search-results'
 
@@ -332,7 +337,6 @@ function setup_git_repositories() {
 
         # gitlab projects
         'https://gitlab.com/printfdebugging/website'
-        'https://gitlab.com/printfdebugging/logs'
 
         # libreoffice projects
         'https://github.com/printfdebugging/themes'
