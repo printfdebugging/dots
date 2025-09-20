@@ -1158,6 +1158,7 @@ function timelog_entry()
     return
   end
   vim.fn.system('echo "' .. date_time_stamp .. ": " .. log .. '" >> ' .. log_file_path)
+  vim.notify("")
 end
 
 function man_or_hover_doc()
